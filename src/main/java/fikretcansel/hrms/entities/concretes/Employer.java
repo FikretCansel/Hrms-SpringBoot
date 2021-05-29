@@ -27,6 +27,5 @@ public class Employer extends User{
 	@Column(name="confirmationId")
 	int confirmationId;
 
-
 }
 

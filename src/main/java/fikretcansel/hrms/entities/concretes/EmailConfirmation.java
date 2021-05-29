@@ -1,34 +1,27 @@
 package fikretcansel.hrms.entities.concretes;
 
-public class EmailConfirmation {
-	private int confirmationId;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="EmailConfirmation")
+@Data
+@PrimaryKeyJoinColumn(name="userId")
+@NoArgsConstructor
+@AllArgsConstructor
+public class EmailConfirmation{
+
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private int id;
+	@Column(name="confirmed")
+	private Boolean confirmed;
+	@Column(name="confirmationToken")
 	private String confirmationToken;
-	
-	public EmailConfirmation() {
-		
-	}
-	
-	public EmailConfirmation(int confirmationId, String confirmationToken) {
-		super();
-		this.confirmationId = confirmationId;
-		this.confirmationToken = confirmationToken;
-	}
-	
-	public int getConfirmationId() {
-		return confirmationId;
-	}
-	public void setConfirmationId(int confirmationId) {
-		this.confirmationId = confirmationId;
-	}
-	public String getConfirmationToken() {
-		return confirmationToken;
-	}
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
-	}
-	
-	
-	
-	
-	
+
 }
