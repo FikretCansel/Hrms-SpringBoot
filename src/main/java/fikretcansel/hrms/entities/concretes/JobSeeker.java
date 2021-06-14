@@ -1,12 +1,11 @@
 package fikretcansel.hrms.entities.concretes;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +31,8 @@ public class JobSeeker extends User{
 	@Column(name="birthDate")
 	Date birthDate;
 
-	
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")
+	private List<Candidate> candidates;
 	
 }

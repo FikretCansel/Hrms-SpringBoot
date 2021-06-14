@@ -5,15 +5,12 @@ import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "api/jobAdvertisement")
+@RequestMapping("/api/jobAdvertisements")
 public class JobAdvertisementController {
 
     private JobAdvertisementService jobAdvertisementService;
@@ -29,20 +26,30 @@ public class JobAdvertisementController {
     }
 
     @PostMapping("add")
-    public Result add(JobAdvertisementDto entity) {
+    public Result add(@RequestBody JobAdvertisement entity) {
         return jobAdvertisementService.add(entity);
     }
 
     @PostMapping("update")
-    public Result update(JobAdvertisement entity) {
+    public Result update(@RequestBody JobAdvertisement entity) {
         return jobAdvertisementService.update(entity);
     }
-
-
     @PostMapping("delete")
-    public Result delete(JobAdvertisement entity) {
+    public Result delete(@RequestBody JobAdvertisement entity) {
         return jobAdvertisementService.delete(entity);
     }
 
+    @GetMapping("/getActives")
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisements() {
+        return jobAdvertisementService.getActiveAdvertisements();
+    }
+    @GetMapping("/getActivesCreationDateList")
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList() {
+        return jobAdvertisementService.getActiveAdvertisementsByCreationDateList();
+    }
+    @GetMapping("/getActivesByEmployerId")
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId) {
+        return jobAdvertisementService.getActiveAdvertisementsByEmployerId(employerId);
+    }
 
 }

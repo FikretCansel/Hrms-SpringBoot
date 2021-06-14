@@ -3,10 +3,7 @@ package fikretcansel.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import fikretcansel.hrms.business.abstracts.JobSeekerService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
@@ -31,7 +28,7 @@ private JobSeekerService jobSeekerService;
 		return jobSeekerService.getAll();
 	}
 	@PostMapping("register")
-	public Result register(JobSeeker entity,String repeatPassword) throws Exception {
+	public Result register(@RequestBody JobSeeker entity, String repeatPassword) throws Exception {
 		return jobSeekerService.register(entity,repeatPassword);
 	}
 	@PostMapping("login")

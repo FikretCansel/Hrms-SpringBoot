@@ -3,10 +3,7 @@ package fikretcansel.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import fikretcansel.hrms.business.abstracts.JobPositionService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
@@ -31,18 +28,18 @@ private JobPositionService jobPositionService;
 	}
 	
 	@PostMapping("add")
-	public Result add(JobPosition entity) {
+	public Result add(@RequestBody JobPosition entity) {
 		return jobPositionService.add(entity);
 	}
 
 	@PostMapping("update")
-	public Result update(JobPosition entity) {
+	public Result update(@RequestBody JobPosition entity) {
 		return jobPositionService.update(entity);
 	}
 
 
 	@PostMapping("delete")
-	public Result delete(JobPosition entity) {
+	public Result delete(@RequestBody JobPosition entity) {
 		return jobPositionService.delete(entity);
 	}
 	

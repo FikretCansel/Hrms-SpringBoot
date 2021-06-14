@@ -1,5 +1,7 @@
 package fikretcansel.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +14,17 @@ import java.util.List;
 @Table(name="cities")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements"})
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="cityId")
-    int id;
+    private int id;
     @Column(name="cityName")
-    String cityName;
+    private String cityName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "city")
-    List<JobAdvertisement> jobAdvertisements;
+    private List<JobAdvertisement> jobAdvertisements;
+
 }

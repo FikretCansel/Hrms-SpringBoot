@@ -11,13 +11,18 @@ public interface JobAdvertisementService {
 
     DataResult<List<JobAdvertisement>> getAll();
 
-    Result add(JobAdvertisementDto entity);
+    Result add(JobAdvertisement entity);
 
     Result update(JobAdvertisement entity);
 
     Result delete(JobAdvertisement entity);
 
-    Result validation(JobAdvertisementDto entity);
+    Result validation(JobAdvertisement entity);
 
+    DataResult<List<JobAdvertisementDto>> getActiveAdvertisements();
+
+    DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList();
+
+    DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId);
 
 }

@@ -1,12 +1,13 @@
 package fikretcansel.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="JobAdvertisements")
@@ -14,13 +15,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 
+
 public class JobAdvertisement{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-    @Column(name="jobPosition",nullable = false)
-    private int jobPosition;
     @Column(name="description",nullable = false)
     private String description;
     @Column(name="minSalary")
@@ -36,21 +36,23 @@ public class JobAdvertisement{
     @Column(name="isActive",nullable = false)
     private Boolean isActive;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade={ CascadeType.PERSIST, CascadeType.MERGE })
+
+
+    @ManyToOne()
     @JoinColumn(name="cityId")
     private City city;
 
-    public JobAdvertisement(int jobPosition,String jobDescription, int minSalary, int maxSalary, int openPositionCount,
-                            Date lastApplyDate, Date createDate, boolean isActive) {
-        super();
-        this.jobPosition=jobPosition;
-        this.description = jobDescription;
-        this.minSalary = minSalary;
-        this.maxSalary = maxSalary;
-        this.openPositionCount = openPositionCount;
-        this.lastApplyDate = lastApplyDate;
-        this.creationDate = createDate;
-        this.isActive = isActive;
-    }
+    @ManyToOne()
+    @JoinColumn(name="employerId")
+    private Employer employer;
+
+    @ManyToOne()
+    @JoinColumn(name="positionId")
+    private JobPosition jobPosition;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "jobAdvertisement")
+    private List<Candidate> candidates;
+
 }
 

@@ -1,14 +1,15 @@
 package fikretcansel.hrms.entities.concretes;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name="Employers")
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @PrimaryKeyJoinColumn(name="userId")
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements"})
 
 public class Employer extends User{
 	@Column(name="companyName")
@@ -26,6 +28,10 @@ public class Employer extends User{
 	String phone;
 	@Column(name="confirmationId")
 	int confirmationId;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "employer")
+	private List<JobAdvertisement> jobAdvertisements;
 
 }
 

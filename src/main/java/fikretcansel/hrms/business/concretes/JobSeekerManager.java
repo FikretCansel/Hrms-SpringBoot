@@ -63,13 +63,13 @@ public class JobSeekerManager implements JobSeekerService {
         }
 
         else if(entity.getFirstName().length()<3){
-            return new ErrorResult("geçerli bir website giriniz!");
+            return new ErrorResult("geçerli bir ad giriniz!");
         }
         else if(entity.getLastName().length()<3){
-            return new ErrorResult("geçerli bir website giriniz!");
+            return new ErrorResult("geçerli bir soyad giriniz!");
         }
         else if(entity.getBirthDate()==null){
-            return new ErrorResult("geçerli bir website giriniz!");
+            return new ErrorResult("geçerli bir dogum tarihi giriniz!");
         }
 
         return new SuccessResult();
@@ -87,9 +87,9 @@ public class JobSeekerManager implements JobSeekerService {
 		if(existNatinalId(entity.getNationalIdentityNumber()).isSuccess()){
 			return new ErrorResult("Bu kimlikli kişi kayıtlı");
 		}
-		if(!mernisAdapter.TcVertify(entity.getNationalIdentityNumber(),entity.getFirstName(),entity.getLastName(),entity.getBirthDate())){
-            return new ErrorResult("Gerçek bilgi giriniz");
-        }
+		//if(!mernisAdapter.TcVertify(entity.getNationalIdentityNumber(),entity.getFirstName(),entity.getLastName(),entity.getBirthDate())){
+          //  return new ErrorResult("Gerçek bilgi giriniz");
+        //}
         /*
 		if(repeatPassword.equals(entity.getPassword())){
             return new ErrorResult("Şifreler aynı degil");

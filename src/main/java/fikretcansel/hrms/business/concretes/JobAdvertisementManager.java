@@ -4,13 +4,10 @@ package fikretcansel.hrms.business.concretes;
 import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
-import fikretcansel.hrms.entities.concretes.City;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
-import fikretcansel.hrms.entities.concretes.JobPosition;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,25 +25,15 @@ public class JobAdvertisementManager implements JobAdvertisementService {
         return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.findAll(),"Veriler Listelendi");
     }
 
-    @Override
-    public Result add(JobAdvertisementDto entity) {
+    public Result add(JobAdvertisement entity) {
         if(!validation(entity).isSuccess()){
             return new ErrorResult(validation(entity).getMessage());
         }
-
-
-        JobAdvertisement jobAdvertisement=new JobAdvertisement(
-                entity.getJobPosition(),entity.getDescription(),
-                entity.getMinSalary(),
-                entity.getMaxSalary(),entity.getOpenPositionCount(),
-                new Date(),new Date(),
-                true);
-
-
-        jobAdvertisementDao.save(jobAdvertisement);
+        jobAdvertisementDao.save(entity);
 
         return new SuccessResult("Kayıt Başarılı");
     }
+
 
     @Override
     public Result update(JobAdvertisement entity) {
@@ -60,7 +47,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
-    public Result validation(JobAdvertisementDto entity) {
+    public Result validation(JobAdvertisement entity) {
 
         if (entity.getMaxSalary() < 0 || entity.getMinSalary() < 0) {
             return new ErrorResult("ücret 0 dan küçük olamaz");
@@ -69,6 +56,22 @@ public class JobAdvertisementManager implements JobAdvertisementService {
         }
 
         return new SuccessResult();
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisements() {
+
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisements(),"Veriler Listelendi");
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList() {
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByCreationDateList(),"Listelendi");
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId) {
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),"Listelendi");
     }
 
 
