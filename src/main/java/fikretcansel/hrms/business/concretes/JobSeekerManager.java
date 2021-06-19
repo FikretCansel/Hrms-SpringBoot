@@ -2,8 +2,7 @@ package fikretcansel.hrms.business.concretes;
 
 import java.util.List;
 
-import fikretcansel.hrms.core.Verifies.Adapter;
-import fikretcansel.hrms.core.Verifies.MernisAdaptor;
+
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.business.abstracts.JobSeekerService;
@@ -21,11 +20,9 @@ import fikretcansel.hrms.entities.concretes.JobSeeker;
 public class JobSeekerManager implements JobSeekerService {
 
     private JobSeekerDao jobSeekerDao;
-    private Adapter mernisAdapter;
 
     public JobSeekerManager(JobSeekerDao jobSeekerDao) {
         this.jobSeekerDao = jobSeekerDao;
-        this.mernisAdapter=new MernisAdaptor();
     }
 
 
@@ -76,16 +73,16 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
 
-    public Result register(JobSeeker entity,String repeatPassword) throws Exception {
+    public DataResult register(JobSeeker entity,String repeatPassword) {
 		if(!validation(entity).isSuccess()) {
-			return new ErrorResult(validation(entity).getMessage());
+			return new ErrorDataResult(validation(entity).getMessage());
 		}
 
 		if(existEmail(entity.getEmail()).isSuccess()) {
-			return new ErrorResult("Kullanıcı zaten kayıtlı");
+			return new ErrorDataResult("Kullanıcı zaten kayıtlı");
 		}
 		if(existNatinalId(entity.getNationalIdentityNumber()).isSuccess()){
-			return new ErrorResult("Bu kimlikli kişi kayıtlı");
+			return new ErrorDataResult("Bu kimlikli kişi kayıtlı");
 		}
 		//if(!mernisAdapter.TcVertify(entity.getNationalIdentityNumber(),entity.getFirstName(),entity.getLastName(),entity.getBirthDate())){
           //  return new ErrorResult("Gerçek bilgi giriniz");
@@ -95,29 +92,30 @@ public class JobSeekerManager implements JobSeekerService {
             return new ErrorResult("Şifreler aynı degil");
         }
         */
-
-
-
 		add(entity);
 
-		return new SuccessResult("Kayıt Başarılı");
+		var user =existEmail(entity.getEmail()).getData();
+
+		return new SuccessDataResult(user,"Kayıt Başarılı");
     }
 
 
-    public Result login(String email, String password) {
+    public DataResult login(String email, String password) {
 
-        if (!existEmail(email).isSuccess()) {
-            return new ErrorResult("Kullanıcı Bulunamadı");
+        var user=existEmail(email);
+
+        if (!user.isSuccess()) {
+            return new ErrorDataResult("Kullanıcı Bulunamadı");
         }
 
-        JobSeeker employer = (JobSeeker) existEmail(email).getData();
+        JobSeeker jobSeeker= (JobSeeker) existEmail(email).getData();
 
-        if (!employer.getPassword().equals(password)) {
-            return new ErrorResult("Şifre Yanlış");
+        if (!jobSeeker.getPassword().equals(password)) {
+            return new ErrorDataResult("Şifre Yanlış");
         }
 
 
-        return new SuccessResult("Giriş Başarılı");
+        return new SuccessDataResult(user.getData(),"Giriş Başarılı");
     }
 
     public DataResult existEmail(String email) {

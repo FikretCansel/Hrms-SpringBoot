@@ -16,4 +16,7 @@ public interface CvService {
 
     Result delete(Cv entity);
 
+    DataResult<Cv> getAllById(int id);
+
+    DataResult<List<Cv>> getAllByJobSeekerId(int userId);
 }

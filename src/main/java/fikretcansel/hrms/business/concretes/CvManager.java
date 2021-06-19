@@ -46,4 +46,14 @@ public class CvManager implements CvService {
         cvDao.delete(entity);
         return new SuccessResult("Silme Başarılı");
     }
+
+    @Override
+    public DataResult<Cv> getAllById(int id) {
+        return new SuccessDataResult<Cv>(cvDao.getAllById(id));
+    }
+    @Override
+    public DataResult<List<Cv>> getAllByJobSeekerId(int jobSeekerId) {
+        return new SuccessDataResult<List<Cv>>(cvDao.getAllByJobSeekerId(jobSeekerId));
+    }
+
 }

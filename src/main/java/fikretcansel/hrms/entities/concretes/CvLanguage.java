@@ -17,9 +17,8 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
 @PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
 @Table(name = "candidateLanguages")
-//@PrimaryKeyJoinColumn(name = "languageId",referencedColumnName = "languageId")
 
-public class CandidateLanguage {
+public class CvLanguage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -33,9 +32,6 @@ public class CandidateLanguage {
 
     //@OneToMany(targetEntity=Language.class, mappedBy="candidateLanguage",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     //private List<Language> languages;
-
-    @Column(name = "languageId")
-    private int languageId;
 
     @JoinColumn(name = "cvId", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)

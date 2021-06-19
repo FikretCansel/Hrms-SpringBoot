@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/api/cvs")
+@RequestMapping("/api/cvs")
 public class CvController {
 
     private CvService cvService;
@@ -34,14 +34,22 @@ public class CvController {
     }
 
     @PostMapping("update")
-    public Result update(Cv entity) {
+    public Result update(@RequestBody Cv entity) {
         return cvService.update(entity);
     }
 
     @PostMapping("delete")
-    public Result delete(Cv entity) {
+    public Result delete(@RequestBody Cv entity) {
         return cvService.delete(entity);
     }
 
+    @GetMapping("/getallById")
+    public DataResult<Cv> getAllById(int id) {
+        return cvService.getAllById(id);
+    }
+    @GetMapping("/getAllByJobSeekerId")
+    public DataResult<List<Cv>> getByJobSeekerId(int jobSeekerId) {
+        return cvService.getAllByJobSeekerId(jobSeekerId);
+    }
 
 }

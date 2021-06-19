@@ -31,12 +31,6 @@ public class Experience {
     @Column(name = "departureDate")
     private Date departureDate;
 
-    @JoinColumn(name = "cvId", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Cv cv;
-
-
     @Column(name = "cvId")
     private int cvId;
 

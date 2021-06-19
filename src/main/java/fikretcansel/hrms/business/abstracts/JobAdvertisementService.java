@@ -2,6 +2,7 @@ package fikretcansel.hrms.business.abstracts;
 
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
+import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
 
@@ -18,6 +19,8 @@ public interface JobAdvertisementService {
     Result delete(JobAdvertisement entity);
 
     Result validation(JobAdvertisement entity);
+
+    SuccessDataResult<JobAdvertisement> getById(int id);
 
     DataResult<List<JobAdvertisementDto>> getActiveAdvertisements();
 

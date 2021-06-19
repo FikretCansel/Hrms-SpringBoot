@@ -1,12 +1,10 @@
 package fikretcansel.hrms.dataAccess.abstracts;
 
-import fikretcansel.hrms.entities.concretes.Employer;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
 import java.util.List;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement,Integer> {

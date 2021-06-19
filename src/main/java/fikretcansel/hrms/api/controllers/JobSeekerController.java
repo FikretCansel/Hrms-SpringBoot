@@ -12,6 +12,7 @@ import fikretcansel.hrms.entities.concretes.User;
 
 @RestController
 @RequestMapping("/api/jobSeekers")
+@CrossOrigin
 public class JobSeekerController {
 
 	
@@ -32,19 +33,19 @@ private JobSeekerService jobSeekerService;
 		return jobSeekerService.register(entity,repeatPassword);
 	}
 	@PostMapping("login")
-	public Result login(User user) {
+	public Result login(@RequestBody User user) {
 		return jobSeekerService.login(user.getEmail(),user.getPassword());
 	}
 	
 
 	@PostMapping("update")
-	public Result update(JobSeeker entity) {
+	public Result update(@RequestBody JobSeeker entity) {
 		return jobSeekerService.update(entity);
 	}
 
 
 	@PostMapping("delete")
-	public Result delete(JobSeeker entity) {
+	public Result delete(@RequestBody JobSeeker entity) {
 		return jobSeekerService.delete(entity);
 	}
 	

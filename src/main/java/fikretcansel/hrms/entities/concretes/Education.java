@@ -13,15 +13,15 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
-@PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","education"})
 @Table(name = "educations")
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
+    @Column(name = "cvId")
+    private int cvId;
     @Column(name="schoolName",nullable = false)
     private String schoolName;
     @Column(name="programName",nullable = false)
@@ -31,16 +31,6 @@ public class Education {
     @Column(name="graduationDate")
     private Date graduationDate;
 
-
-
-    @JoinColumn(name = "cvId", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Cv cv;
-
-
-    @Column(name = "cvId")
-    private int cvId;
 
 }
 

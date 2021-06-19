@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/candidates")
+@CrossOrigin
 public class CandidateController {
     private CandidateService candidateService;
 
@@ -33,13 +34,13 @@ public class CandidateController {
 
 
     @PostMapping("update")
-    public Result update(Candidate entity) {
+    public Result update(@RequestBody Candidate entity) {
         return candidateService.update(entity);
     }
 
 
     @PostMapping("delete")
-    public Result delete(Candidate entity) {
+    public Result delete(@RequestBody Candidate entity) {
         return candidateService.delete(entity);
     }
 

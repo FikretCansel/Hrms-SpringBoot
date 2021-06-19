@@ -2,11 +2,9 @@ package fikretcansel.hrms.api.controllers;
 
 import java.util.List;
 
+import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fikretcansel.hrms.business.abstracts.EmployerService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
@@ -16,6 +14,8 @@ import fikretcansel.hrms.entities.concretes.User;
 
 @RestController
 @RequestMapping("/api/employers")
+@CrossOrigin
+
 public class EmployerController {
 
 	
@@ -32,22 +32,22 @@ private EmployerService employerService;
 		return employerService.getAll();
 	}
 	@PostMapping("register")
-	public Result register(Employer entity,String repeatPassword) throws Exception {
+	public Result register(@RequestBody Employer entity, String repeatPassword) {
 		return employerService.register(entity,repeatPassword);
 	}
 	@PostMapping("login")
-	public Result login(User user) {
+	public Result login(@RequestBody User user) {
 		return employerService.login(user.getEmail(),user.getPassword());
 	}
 
 	@PostMapping("update")
-	public Result update(Employer entity) {
+	public Result update(@RequestBody Employer entity) {
 		return employerService.update(entity);
 	}
 
 
 	@PostMapping("delete")
-	public Result delete(Employer entity) {
+	public Result delete(@RequestBody Employer entity) {
 		return employerService.delete(entity);
 	}
 	

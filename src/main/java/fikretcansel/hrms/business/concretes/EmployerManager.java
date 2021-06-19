@@ -4,8 +4,6 @@ package fikretcansel.hrms.business.concretes;
 
 import java.util.List;
 
-import fikretcansel.hrms.core.Verifies.Adapter;
-import fikretcansel.hrms.core.Verifies.MernisAdaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,33 +69,38 @@ private EmployerDao employerDao;
 	}
 	
 	
-	public Result register(Employer entity,String repeatPassword) {
+	public DataResult register(Employer entity,String repeatPassword) {
         if(!validation(entity).isSuccess()) {
-            return new ErrorResult(validation(entity).getMessage());
+            return new ErrorDataResult(validation(entity).getMessage());
         }
         if(existEmail(entity.getEmail()).isSuccess()) {
-            return new ErrorResult("Kullanıcı zaten kayıtlı");
+            return new ErrorDataResult("Kullanıcı zaten kayıtlı");
         }
         
         add(entity);
+
+        var user=existEmail(entity.getEmail());
         
-        return new SuccessResult("Kayıt Başarılı");
+        return new SuccessDataResult(user.getData(),"Kayıt Başarılı");
     }
 
     
-    public Result login(String email,String password) {
-        if(!existEmail(email).isSuccess()) {
-            return new ErrorResult("Kullanıcı Bulunamadı");
+    public DataResult login(String email,String password) {
+
+		var user=existEmail(email);
+
+        if(!user.isSuccess()) {
+            return new ErrorDataResult("Kullanıcı Bulunamadı");
         }
 
         Employer employer=(Employer) existEmail(email).getData();
 
         if(!employer.getPassword().equals(password)){
-			return new ErrorResult("Şifre Yanlış");
+			return new ErrorDataResult("Şifre Yanlış");
 		}
 
 
-        return new SuccessResult("Giriş Başarılı");
+        return new SuccessDataResult(user.getData(),"Giriş Başarılı");
     }
     
     public DataResult existEmail(String email) {

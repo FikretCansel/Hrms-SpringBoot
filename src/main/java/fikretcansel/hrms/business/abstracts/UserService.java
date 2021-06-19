@@ -7,8 +7,8 @@ import fikretcansel.hrms.core.utilities.results.concretes.Result;
 
 public interface UserService<T>{
 	
-	Result register(T entity,String repeatPassword) throws Exception;
-	Result login(String email,String password);
+	DataResult register(T entity,String repeatPassword);
+	DataResult login(String email,String password);
 	DataResult<List<T>> getAll();
 	Result update(T entity);
 	Result delete(T entity);

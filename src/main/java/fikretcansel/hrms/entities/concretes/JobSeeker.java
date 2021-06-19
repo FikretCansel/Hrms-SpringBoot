@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @PrimaryKeyJoinColumn(name="userId")
-
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidates","cvs","password","nationalIdentityNumber"})
 public class JobSeeker extends User{
 
-	@Column(name="confirmationId")
-	int confirmationId;
 	@Column(name="nationalIdentityNumber")
 	String nationalIdentityNumber;
 	@Column(name="firstName")
@@ -34,5 +33,9 @@ public class JobSeeker extends User{
 	@JsonIgnore
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<Candidate> candidates;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "jobSeeker")
+	private List<Cv> cvs;
 	
 }
