@@ -118,6 +118,11 @@ public class JobSeekerManager implements JobSeekerService {
         return new SuccessDataResult(user.getData(),"Giriş Başarılı");
     }
 
+    public DataResult<JobSeeker> getById(int id){
+        return new SuccessDataResult<JobSeeker>(jobSeekerDao.getById(id),"Listelendi");
+    }
+
+
     public DataResult existEmail(String email) {
 
 		JobSeeker jobSeeker=jobSeekerDao.getByEmail(email);

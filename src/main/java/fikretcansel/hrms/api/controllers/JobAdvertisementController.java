@@ -22,8 +22,12 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/getById")
-    public SuccessDataResult<JobAdvertisement> getById(int id){
+    public DataResult<JobAdvertisement> getById(int id){
         return jobAdvertisementService.getById(id);
+    }
+    @GetMapping("/getByEmployerId")
+    public DataResult<List<JobAdvertisement>> getByEmployerId(int id){
+        return jobAdvertisementService.getByEmployerId(id);
     }
 
     @GetMapping("/getall")

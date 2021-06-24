@@ -110,4 +110,10 @@ private EmployerDao employerDao;
 		}
         return new ErrorDataResult<Employer>(null,"Kullanıcı yok");
     }
+
+	@Override
+	public DataResult<Employer> getById(int id) {
+
+		return new SuccessDataResult<Employer>(employerDao.getById(id),"Listelendi");
+	}
 }

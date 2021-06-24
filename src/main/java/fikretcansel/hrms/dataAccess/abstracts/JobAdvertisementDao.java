@@ -13,6 +13,8 @@ public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement,Inte
 
     JobAdvertisement getById(int id);
 
+    List<JobAdvertisement> getByEmployerId(int id);
+
     @Query("Select new fikretcansel.hrms.entities.dto.JobAdvertisementDto"
             + "(ja.id, ja.employer.companyName,ja.jobPosition.name,ja.openPositionCount,ja.creationDate,ja.lastApplyDate)" +
             "From JobAdvertisement ja where ja.isActive=true")

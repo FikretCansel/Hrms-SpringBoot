@@ -3,6 +3,7 @@ package fikretcansel.hrms.business.abstracts;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.Cv;
+import fikretcansel.hrms.entities.dto.CvDetailDto;
 
 
 import java.util.List;
@@ -16,7 +17,11 @@ public interface CvService {
 
     Result delete(Cv entity);
 
-    DataResult<Cv> getAllById(int id);
+    DataResult<Cv> getById(int id);
 
-    DataResult<List<Cv>> getAllByJobSeekerId(int userId);
+    DataResult<Cv> getByJobSeekerIdForItSelf(int userId);
+
+    DataResult<Cv> getByJobSeekerIdForEmployers(int userId,int employerId);
+
+
 }

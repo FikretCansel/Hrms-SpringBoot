@@ -2,6 +2,7 @@ package fikretcansel.hrms.api.controllers;
 
 import fikretcansel.hrms.business.abstracts.CandidateService;
 import fikretcansel.hrms.business.abstracts.CityService;
+import fikretcansel.hrms.core.adapters.CloudinaryAdapter;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.Candidate;
@@ -17,10 +18,12 @@ import java.util.List;
 public class CandidateController {
     private CandidateService candidateService;
 
+
     @Autowired
     public CandidateController(CandidateService candidateService) {
         super();
         this.candidateService = candidateService;
+
     }
 
     @GetMapping("/getall")
@@ -29,6 +32,8 @@ public class CandidateController {
     }
     @PostMapping("apply")
     public Result apply(@RequestBody Candidate entity){
+
+
         return candidateService.apply(entity);
     }
 

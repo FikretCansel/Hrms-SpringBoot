@@ -20,7 +20,9 @@ public interface JobAdvertisementService {
 
     Result validation(JobAdvertisement entity);
 
-    SuccessDataResult<JobAdvertisement> getById(int id);
+    DataResult<JobAdvertisement> getById(int id);
+
+    DataResult<List<JobAdvertisement>> getByEmployerId(int id);
 
     DataResult<List<JobAdvertisementDto>> getActiveAdvertisements();
 

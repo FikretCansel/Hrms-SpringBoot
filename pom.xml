@@ -12,7 +12,7 @@
 	<groupId>fikret</groupId>
 	<artifactId>nortwind</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nortwind</name>
+	<name>hrms</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>16</java.version>
@@ -58,7 +58,15 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.29.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

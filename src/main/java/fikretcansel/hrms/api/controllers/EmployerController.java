@@ -50,5 +50,9 @@ private EmployerService employerService;
 	public Result delete(@RequestBody Employer entity) {
 		return employerService.delete(entity);
 	}
+	@GetMapping("/getById")
+	public DataResult<Employer> getById(int id) {
+		return employerService.getById(id);
+	}
 	
 }

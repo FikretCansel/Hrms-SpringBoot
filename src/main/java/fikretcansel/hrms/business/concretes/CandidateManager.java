@@ -42,4 +42,9 @@ public class CandidateManager implements CandidateService {
         candidateDao.delete(entity);
         return new SuccessResult("Silme Başarılı");
     }
+
+    @Override
+    public DataResult<Boolean> getViewProfilePermission(int employerId,int jobSeekerId) {
+        return new SuccessDataResult<Boolean>(candidateDao.existsAllByJobAdvertisementEmployerIdAndJobSeekerId(employerId,jobSeekerId));
+    }
 }

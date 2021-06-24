@@ -48,6 +48,12 @@ private JobSeekerService jobSeekerService;
 	public Result delete(@RequestBody JobSeeker entity) {
 		return jobSeekerService.delete(entity);
 	}
+
+	@GetMapping("/getById")
+	public DataResult<JobSeeker> getById(int id)
+	{
+		return jobSeekerService.getById(id);
+	}
 	
 }
 

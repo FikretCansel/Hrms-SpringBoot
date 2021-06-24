@@ -16,4 +16,6 @@ public interface CandidateService {
     Result update(Candidate entity);
 
     Result delete(Candidate entity);
+
+    DataResult<Boolean> getViewProfilePermission(int employerId,int jobSeekerId) ;
 }

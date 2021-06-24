@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
 @PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
 @Table(name = "experiences")
 public class Experience {
@@ -31,7 +31,9 @@ public class Experience {
     @Column(name = "departureDate")
     private Date departureDate;
 
-    @Column(name = "cvId")
-    private int cvId;
+    @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
+    @JoinColumn(name="cvId")
+    @JsonIgnore
+    private Cv cv;
 
 }

@@ -33,13 +33,10 @@ public class CvLanguage {
     //@OneToMany(targetEntity=Language.class, mappedBy="candidateLanguage",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     //private List<Language> languages;
 
-    @JoinColumn(name = "cvId", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
+
     @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "cvId")
     private Cv cv;
-
-
-    @Column(name = "cvId")
-    private int cvId;
 
 }

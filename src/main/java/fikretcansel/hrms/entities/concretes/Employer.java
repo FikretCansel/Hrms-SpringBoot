@@ -19,6 +19,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisements","password"})
 public class Employer extends User{
+
 	@Column(name="companyName")
 	String companyName;
 	@Column(name="websiteLink")
@@ -31,6 +32,7 @@ public class Employer extends User{
 	@JsonIgnore
 	@OneToMany(mappedBy = "employer")
 	private List<JobAdvertisement> jobAdvertisements;
+
 
 }
 

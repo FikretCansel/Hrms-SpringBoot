@@ -12,6 +12,6 @@ public class ErrorDataResult<T> extends DataResult<T>{
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
+
+
 }

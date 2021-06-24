@@ -11,11 +11,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CvDetailDto {
-    private List<Cv> cvs;
+    private Cv cvs;
     private List<Education> educations;
     private List<Experience> experiences;
     private List<CvLanguage> cvLanguages;
+
+
+
 }

@@ -7,6 +7,7 @@ import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.City;
 import fikretcansel.hrms.entities.concretes.Cv;
+import fikretcansel.hrms.entities.dto.CvDetailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cvs")
+@CrossOrigin
 public class CvController {
 
     private CvService cvService;
@@ -24,7 +26,7 @@ public class CvController {
         this.cvService = cvService;
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public DataResult<List<Cv>> getAll() {
         return cvService.getAll();
     }
@@ -43,13 +45,19 @@ public class CvController {
         return cvService.delete(entity);
     }
 
-    @GetMapping("/getallById")
+    @GetMapping("/getById")
     public DataResult<Cv> getAllById(int id) {
-        return cvService.getAllById(id);
+        return cvService.getById(id);
     }
-    @GetMapping("/getAllByJobSeekerId")
-    public DataResult<List<Cv>> getByJobSeekerId(int jobSeekerId) {
-        return cvService.getAllByJobSeekerId(jobSeekerId);
+    @GetMapping("/getByJobSeekerIdForEmployers")
+    public DataResult<Cv> getByJobSeekerIdForEmployers(int jobSeekerId,int employerId) {
+
+        return cvService.getByJobSeekerIdForEmployers(jobSeekerId,employerId);
+    }
+    @GetMapping("/getByJobSeekerIdForItSelf")
+    public DataResult<Cv> getByJobSeekerIdForItSelf(int jobSeekerId) {
+
+        return cvService.getByJobSeekerIdForItSelf(jobSeekerId);
     }
 
 }
