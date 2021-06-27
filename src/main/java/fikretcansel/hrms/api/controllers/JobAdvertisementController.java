@@ -2,13 +2,20 @@ package fikretcansel.hrms.api.controllers;
 
 import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
+import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/jobAdvertisements")
@@ -36,12 +43,12 @@ public class JobAdvertisementController {
     }
 
     @PostMapping("add")
-    public Result add(@RequestBody JobAdvertisement entity) {
+    public Result add(@Valid @RequestBody JobAdvertisement entity) {
         return jobAdvertisementService.add(entity);
     }
 
     @PostMapping("update")
-    public Result update(@RequestBody JobAdvertisement entity) {
+    public Result update(@Valid @RequestBody JobAdvertisement entity) {
         return jobAdvertisementService.update(entity);
     }
     @PostMapping("delete")
@@ -62,4 +69,18 @@ public class JobAdvertisementController {
         return jobAdvertisementService.getActiveAdvertisementsByEmployerId(employerId);
     }
 
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
+
+        Map<String,String> validationErrors=new HashMap<String,String>();
+
+        for (FieldError fieldError:exceptions.getBindingResult().getFieldErrors()){
+            validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
+        }
+        ErrorDataResult<Object> error=new ErrorDataResult<Object>(validationErrors,"Doğrulama Hatası");
+
+        return error;
+    }
 }

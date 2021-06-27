@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
+
 @Service
 public class CandidateManager implements CandidateService {
     private CandidateDao candidateDao;
@@ -24,23 +26,23 @@ public class CandidateManager implements CandidateService {
 
     public DataResult<List<Candidate>> getAll() {
 
-        return new SuccessDataResult<List<Candidate>>(candidateDao.findAll(),"Listelendi");
+        return new SuccessDataResult<List<Candidate>>(candidateDao.findAll(),getSuccess);
     }
 
     public Result apply(Candidate entity) {
 
         candidateDao.save(entity);
-        return new SuccessResult("Ekleme Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
     public Result update(Candidate entity) {
 
-        return new SuccessResult("Güncelleme Başarılı,işlem yapılmadı dikkat");
+        return new SuccessResult(updateSuccess);
     }
 
     public Result delete(Candidate entity) {
         candidateDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
+        return new SuccessResult(deleteSuccess);
     }
 
     @Override

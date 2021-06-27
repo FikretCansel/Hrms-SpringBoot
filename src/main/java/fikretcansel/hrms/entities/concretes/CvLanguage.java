@@ -2,11 +2,13 @@ package fikretcansel.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
-@PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
+//@PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
 @Table(name = "candidateLanguages")
 
 public class CvLanguage {
@@ -24,9 +26,12 @@ public class CvLanguage {
     @Column(name = "id")
     private int id;
 
+    @NotNull
+    @NotBlank
     @Column(name="level")
     private short level;
-
+    @NotNull
+    @NotBlank
     @Column(name="languageName")
     private String languageName;
 

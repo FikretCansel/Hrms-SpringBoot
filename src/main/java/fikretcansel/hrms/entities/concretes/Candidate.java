@@ -21,7 +21,7 @@ public class Candidate {
 
 
     @ManyToOne()
-    @JoinColumn(name="jobSeekerId")
+    @JoinColumn(name="jobSeekerId",nullable = false)
     private JobSeeker jobSeeker;
 
 
@@ -29,9 +29,8 @@ public class Candidate {
     @JoinColumn(name="jobAdvertisementId")
     private JobAdvertisement jobAdvertisement;
 
-    
-    //private JobAdvertisement jobAdvertisement;
-
-    //private Cv cv;
+//    @ManyToOne()
+//    @JoinColumn(name = "cvId")
+//    private Cv cv;
 
 }

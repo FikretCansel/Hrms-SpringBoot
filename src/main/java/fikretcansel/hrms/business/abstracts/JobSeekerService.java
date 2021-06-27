@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
 
 @Service
-public interface JobSeekerService extends UserService<JobSeeker>{
+public interface JobSeekerService extends UserBase<JobSeeker> {
 
     DataResult<JobSeeker> getById(int id);
 	

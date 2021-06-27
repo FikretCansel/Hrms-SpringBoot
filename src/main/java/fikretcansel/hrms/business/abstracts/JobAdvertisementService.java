@@ -18,8 +18,6 @@ public interface JobAdvertisementService {
 
     Result delete(JobAdvertisement entity);
 
-    Result validation(JobAdvertisement entity);
-
     DataResult<JobAdvertisement> getById(int id);
 
     DataResult<List<JobAdvertisement>> getByEmployerId(int id);

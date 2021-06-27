@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
+
 @Service
 public class CvManager implements CvService {
 
@@ -61,7 +63,7 @@ public class CvManager implements CvService {
             }
         }
 
-        return new SuccessResult("Ekleme Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
 
@@ -73,7 +75,7 @@ public class CvManager implements CvService {
     @Override
     public Result delete(Cv entity) {
         cvDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
+        return new SuccessResult(deleteSuccess);
     }
 
     @Override
@@ -93,7 +95,7 @@ public class CvManager implements CvService {
     @Override
     public DataResult<Cv> getByJobSeekerIdForEmployers(int jobSeekerId,int employerId) {
         if(!candidateService.getViewProfilePermission(employerId,jobSeekerId).getData()){
-            return new ErrorDataResult<>(null,"Bu Profili görmeye izniniz yok");
+            return new ErrorDataResult<>(null,NotPermission);
         }
 
 

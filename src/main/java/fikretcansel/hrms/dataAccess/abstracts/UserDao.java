@@ -10,7 +10,9 @@ import fikretcansel.hrms.entities.concretes.User;
 
 public interface UserDao extends JpaRepository<User, Integer>{
 	
-	User findByEmail(String email);
+	User getByEmail(String email);
 	
-	
+	int getIdByEmail(String email);
+
+	User getById(int id);
 }

@@ -7,8 +7,15 @@ import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+
+
+import javax.validation.Valid;
 import java.util.List;
+
+import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
+import static fikretcansel.hrms.business.constants.MessagesTr.getSuccess;
 
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
@@ -25,10 +32,8 @@ public class JobAdvertisementManager implements JobAdvertisementService {
         return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.findAll(),"Veriler Listelendi");
     }
 
-    public Result add(JobAdvertisement entity) {
-        if(!validation(entity).isSuccess()){
-            return new ErrorResult(validation(entity).getMessage());
-        }
+    public Result add(@Valid @RequestBody JobAdvertisement entity) {
+
         jobAdvertisementDao.save(entity);
 
         return new SuccessResult("Kayıt Başarılı");
@@ -36,51 +41,39 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 
 
     @Override
-    public Result update(JobAdvertisement entity) {
+    public Result update(@Valid @RequestBody JobAdvertisement entity) {
         return null;
     }
 
     @Override
     public Result delete(JobAdvertisement entity) {
         jobAdvertisementDao.delete(entity);
-        return new SuccessResult("Başarıyla Silindi");
-    }
-
-    @Override
-    public Result validation(JobAdvertisement entity) {
-
-        if (entity.getMaxSalary() < 0 || entity.getMinSalary() < 0) {
-            return new ErrorResult("ücret 0 dan küçük olamaz");
-        } else if (entity.getDescription().length() < 3) {
-            return new ErrorResult("açıklama 3 karakterden küçük olamaz");
-        }
-
-        return new SuccessResult();
+        return new SuccessResult(deleteSuccess);
     }
 
     @Override
     public DataResult<JobAdvertisement> getById(int id) {
-        return new SuccessDataResult<>(jobAdvertisementDao.getById(id),"Listelendi");
+        return new SuccessDataResult<>(jobAdvertisementDao.getById(id),getSuccess);
     }
     @Override
     public DataResult<List<JobAdvertisement>> getByEmployerId(int id) {
-        return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.getByEmployerId(id),"Listelendi");
+        return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.getByEmployerId(id),getSuccess);
     }
 
     @Override
     public DataResult<List<JobAdvertisementDto>> getActiveAdvertisements() {
 
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisements(),"Veriler Listelendi");
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisements(),getSuccess);
     }
 
     @Override
     public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList() {
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByCreationDateList(),"Listelendi");
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByCreationDateList(),getSuccess);
     }
 
     @Override
     public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId) {
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),"Listelendi");
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),getSuccess);
     }
 
 

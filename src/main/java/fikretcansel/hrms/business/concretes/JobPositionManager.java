@@ -13,6 +13,8 @@ import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import fikretcansel.hrms.dataAccess.abstracts.JobPositionDao;
 import fikretcansel.hrms.entities.concretes.JobPosition;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
+
 @Service
 public class JobPositionManager implements JobPositionService {
 	
@@ -26,32 +28,26 @@ private JobPositionDao jobPositionDao;
 	@Override
 	public DataResult<List<JobPosition>> getAll() {
 
-		return new SuccessDataResult<List<JobPosition>>(jobPositionDao.findAll(),"Listelendi");
+		return new SuccessDataResult<List<JobPosition>>(jobPositionDao.findAll(),getSuccess);
 	}
 
 	public Result add(JobPosition entity) {
 		if(jobPositionDao.existsJobPositionByName(entity.getName())){
-			return new ErrorResult("Bu iş pozisyonu zaten mevcut");
+			return new ErrorResult(jobPositionAlreadyExist);
 		}
 		jobPositionDao.save(entity);
-		return new SuccessResult("Ekleme Başarılı");
+		return new SuccessResult(saveSuccess);
 	}
 	
 	public Result update(JobPosition entity) {
 		
-		return new SuccessResult("Güncelleme Başarılı,işlem yapılmadı dikkat");
+		return new SuccessResult(updateSuccess);
 	}
 
 	public Result delete(JobPosition entity) {
 		jobPositionDao.delete(entity);
-		return new SuccessResult("Silme Başarılı");
+		return new SuccessResult(deleteSuccess);
 	}
 
-	@Override
-	public Result validation(JobPosition entity) {
-		if(entity.getName().length()<1) {
-			return new ErrorResult("isminizi giriniz");
-		}
-		return new SuccessResult();
-	}
+
 }

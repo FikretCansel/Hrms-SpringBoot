@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
+import static fikretcansel.hrms.business.constants.MessagesTr.saveSuccess;
+
 @Service
 public class LanguageManager implements LanguageService {
     private LanguageDao languageDao;
@@ -30,7 +33,7 @@ public class LanguageManager implements LanguageService {
 
 
         languageDao.save(entity);
-        return new SuccessResult("Ekleme Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
     @Override
@@ -41,6 +44,6 @@ public class LanguageManager implements LanguageService {
     @Override
     public Result delete(Language entity) {
         languageDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
+        return new SuccessResult(deleteSuccess);
     }
 }

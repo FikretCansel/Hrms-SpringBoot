@@ -3,6 +3,8 @@ package fikretcansel.hrms.business.concretes;
 import java.util.List;
 
 
+import fikretcansel.hrms.business.abstracts.EmailVerificationService;
+import fikretcansel.hrms.entities.dto.LoginResultDto;
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.business.abstracts.JobSeekerService;
@@ -13,16 +15,19 @@ import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import fikretcansel.hrms.dataAccess.abstracts.JobSeekerDao;
-import fikretcansel.hrms.entities.concretes.Employer;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
+
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
 
 @Service
 public class JobSeekerManager implements JobSeekerService {
 
     private JobSeekerDao jobSeekerDao;
+    private EmailVerificationService emailVerificationService;
 
-    public JobSeekerManager(JobSeekerDao jobSeekerDao) {
+    public JobSeekerManager(JobSeekerDao jobSeekerDao,EmailVerificationService emailVerificationService) {
         this.jobSeekerDao = jobSeekerDao;
+        this.emailVerificationService=emailVerificationService;
     }
 
 
@@ -30,73 +35,39 @@ public class JobSeekerManager implements JobSeekerService {
         return new SuccessDataResult<List<JobSeeker>>(jobSeekerDao.findAll(), "Kullancılar Listelendi");
     }
 
-    private Result add(JobSeeker entity) {
-        jobSeekerDao.save(entity);
-        return new SuccessResult("Ekleme Başarılı");
-    }
-
 
     @Override
     public Result update(JobSeeker entity) {
 
-        return new SuccessResult("Güncelleme Başarılı");
+        return new SuccessResult(updateSuccess);
     }
 
 
     @Override
     public Result delete(JobSeeker entity) {
         jobSeekerDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
-    }
-
-    public Result validation(JobSeeker entity) {
-        if (entity.getNationalIdentityNumber().length() != 11) {
-            return new ErrorResult("kimlik numarası 11 karakter olmalıdır");
-        } else if (entity.getPassword().length() < 3) {
-            return new ErrorResult("şifre 3 karakterden çok olmalıdır");
-        }
-        else if(entity.getEmail().length()<3){
-            return new ErrorResult("geçerli bir email giriniz!");
-        }
-
-        else if(entity.getFirstName().length()<3){
-            return new ErrorResult("geçerli bir ad giriniz!");
-        }
-        else if(entity.getLastName().length()<3){
-            return new ErrorResult("geçerli bir soyad giriniz!");
-        }
-        else if(entity.getBirthDate()==null){
-            return new ErrorResult("geçerli bir dogum tarihi giriniz!");
-        }
-
-        return new SuccessResult();
+        return new SuccessResult(deleteSuccess);
     }
 
 
-    public DataResult register(JobSeeker entity,String repeatPassword) {
-		if(!validation(entity).isSuccess()) {
-			return new ErrorDataResult(validation(entity).getMessage());
-		}
+
+    public DataResult register(JobSeeker entity) {
 
 		if(existEmail(entity.getEmail()).isSuccess()) {
-			return new ErrorDataResult("Kullanıcı zaten kayıtlı");
+			return new ErrorDataResult(null,userAlreadyRegistered);
 		}
-		if(existNatinalId(entity.getNationalIdentityNumber()).isSuccess()){
-			return new ErrorDataResult("Bu kimlikli kişi kayıtlı");
+		if(existNationalId(entity.getNationalIdentityNumber()).isSuccess()){
+			return new ErrorDataResult(null,userAlreadyRegistered);
 		}
 		//if(!mernisAdapter.TcVertify(entity.getNationalIdentityNumber(),entity.getFirstName(),entity.getLastName(),entity.getBirthDate())){
           //  return new ErrorResult("Gerçek bilgi giriniz");
         //}
-        /*
-		if(repeatPassword.equals(entity.getPassword())){
-            return new ErrorResult("Şifreler aynı degil");
-        }
-        */
-		add(entity);
 
-		var user =existEmail(entity.getEmail()).getData();
+        var newUser=jobSeekerDao.save(entity);
 
-		return new SuccessDataResult(user,"Kayıt Başarılı");
+        var sendMail=emailVerificationService.sendCodeToMail(newUser.getEmail(),newUser.getId());
+
+		return new SuccessDataResult(newUser,saveSuccess);
     }
 
 
@@ -104,22 +75,26 @@ public class JobSeekerManager implements JobSeekerService {
 
         var user=existEmail(email);
 
+        JobSeeker userData= (JobSeeker) user.getData();
+
         if (!user.isSuccess()) {
-            return new ErrorDataResult("Kullanıcı Bulunamadı");
+            return new ErrorDataResult(null,userNotFound);
         }
 
         JobSeeker jobSeeker= (JobSeeker) existEmail(email).getData();
 
         if (!jobSeeker.getPassword().equals(password)) {
-            return new ErrorDataResult("Şifre Yanlış");
+            return new ErrorDataResult(null,wrongPassword);
         }
 
+        LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()));
 
-        return new SuccessDataResult(user.getData(),"Giriş Başarılı");
+
+        return new SuccessDataResult(ResultData,loginSuccess);
     }
 
     public DataResult<JobSeeker> getById(int id){
-        return new SuccessDataResult<JobSeeker>(jobSeekerDao.getById(id),"Listelendi");
+        return new SuccessDataResult<JobSeeker>(jobSeekerDao.getById(id),getSuccess);
     }
 
 
@@ -129,16 +104,16 @@ public class JobSeekerManager implements JobSeekerService {
 		if(jobSeeker!=null){
 			return new SuccessDataResult<JobSeeker>(jobSeeker);
 		}
-		return new ErrorDataResult<JobSeeker>(null,"Kullanıcı yok");
+		return new ErrorDataResult<JobSeeker>(null,userNotFound);
     }
 
-	public Result existNatinalId(String nationalId) {
+	public Result existNationalId(String nationalId) {
 
 		boolean jobSeekerExist=jobSeekerDao.existsByNationalIdentityNumber(nationalId);
 		if(jobSeekerExist){
 			return new SuccessResult();
 		}
-		return new ErrorResult("Kullanıcı yok");
+		return new ErrorResult(userNotFound);
 	}
 
 }

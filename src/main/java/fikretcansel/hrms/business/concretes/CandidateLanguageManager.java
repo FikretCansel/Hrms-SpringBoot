@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
+
 @Service
 public class CandidateLanguageManager implements CandidateLanguageService {
 
@@ -23,23 +25,23 @@ public class CandidateLanguageManager implements CandidateLanguageService {
 
     public DataResult<List<CvLanguage>> getAll() {
 
-        return new SuccessDataResult<List<CvLanguage>>(candidateLanguageDao.findAll(),"Listelendi");
+        return new SuccessDataResult<List<CvLanguage>>(candidateLanguageDao.findAll(),getSuccess);
     }
 
     public Result add(CvLanguage entity) {
 
         candidateLanguageDao.save(entity);
-        return new SuccessResult("Ekleme Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
     public Result update(CvLanguage entity) {
 
-        return new SuccessResult("Güncelleme Başarılı,işlem yapılmadı dikkat");
+        return new SuccessResult(updateSuccess);
     }
 
     public Result delete(CvLanguage entity) {
         candidateLanguageDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
+        return new SuccessResult(deleteSuccess);
     }
 
 }

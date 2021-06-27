@@ -2,6 +2,7 @@ package fikretcansel.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -23,8 +25,12 @@ public class JobPosition{
 	@GeneratedValue
 	@Column(name="id")
 	private int id;
+	@NotNull
+	@NotBlank
 	@Column(name="name")
 	private String name;
+	@NotNull
+	@NotBlank
 	@Column(name="createDate")
 	private Date createDate;
 

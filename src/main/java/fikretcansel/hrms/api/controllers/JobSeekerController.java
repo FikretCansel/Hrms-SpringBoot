@@ -1,14 +1,23 @@
 package fikretcansel.hrms.api.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import fikretcansel.hrms.business.abstracts.JobSeekerService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
 import fikretcansel.hrms.entities.concretes.User;
+
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/jobSeekers")
@@ -28,18 +37,18 @@ private JobSeekerService jobSeekerService;
 	public DataResult<List<JobSeeker>> getAll() {
 		return jobSeekerService.getAll();
 	}
-	@PostMapping("register")
-	public Result register(@RequestBody JobSeeker entity, String repeatPassword) throws Exception {
-		return jobSeekerService.register(entity,repeatPassword);
+	@PostMapping(  "register")
+	public Result register(@Valid @RequestBody JobSeeker entity) throws Exception {
+		return jobSeekerService.register(entity);
 	}
 	@PostMapping("login")
-	public Result login(@RequestBody User user) {
+	public Result login(@Valid @RequestBody User user) {
 		return jobSeekerService.login(user.getEmail(),user.getPassword());
 	}
 	
 
 	@PostMapping("update")
-	public Result update(@RequestBody JobSeeker entity) {
+	public Result update(@Valid @RequestBody JobSeeker entity) {
 		return jobSeekerService.update(entity);
 	}
 
@@ -54,6 +63,23 @@ private JobSeekerService jobSeekerService;
 	{
 		return jobSeekerService.getById(id);
 	}
-	
+
+
+
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(HttpStatus.OK)
+	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
+
+		Map<String,String> validationErrors=new HashMap<String,String>();
+
+		for (FieldError fieldError:exceptions.getBindingResult().getFieldErrors()){
+			validationErrors.put(fieldError.getField(),fieldError.getDefaultMessage());
+		}
+		ErrorDataResult<Object> error=new ErrorDataResult<Object>(validationErrors,"Doğrulama Hatası");
+
+		return error;
+	}
+
 }
 

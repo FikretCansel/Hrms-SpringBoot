@@ -1,11 +1,13 @@
 package fikretcansel.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +29,13 @@ public class JobAdvertisement{
     private int minSalary;
     @Column(name="maxSalary")
     private int maxSalary;
-    @Column(name="openPositionCount")
+    @Column(name="openPositionCount",nullable = false)
     private int openPositionCount;
-    @Column(name="lastApplyDate")
+    @Column(name="lastApplyDate",nullable = false)
     private Date lastApplyDate;
-    @Column(name="creationDate")
+    @Column(name="creationDate",nullable = false)
     private Date creationDate;
+    @NotNull
     @Column(name="isActive",nullable = false)
     private Boolean isActive;
 
@@ -46,8 +49,9 @@ public class JobAdvertisement{
     @JoinColumn(name="employerId")
     private Employer employer;
 
+
     @ManyToOne()
-    @JoinColumn(name="positionId")
+    @JoinColumn(name="positionId",nullable = false)
     private JobPosition jobPosition;
 
     @JsonIgnore

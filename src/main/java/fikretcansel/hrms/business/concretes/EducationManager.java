@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
+import static fikretcansel.hrms.business.constants.MessagesTr.saveSuccess;
+
 @Service
 public class EducationManager implements EducationService {
     private EducationDao educationDao;
@@ -30,7 +33,7 @@ public class EducationManager implements EducationService {
 
 
         educationDao.save(entity);
-        return new SuccessResult("Ekleme Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class EducationManager implements EducationService {
     @Override
     public Result delete(Education entity) {
         educationDao.delete(entity);
-        return new SuccessResult("Silme Başarılı");
+        return new SuccessResult(deleteSuccess);
     }
 
 }

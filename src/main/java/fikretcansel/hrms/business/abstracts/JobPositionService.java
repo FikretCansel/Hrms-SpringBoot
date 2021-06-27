@@ -16,6 +16,4 @@ public interface JobPositionService{
 	
 	Result delete(JobPosition entity);
 	
-	Result validation(JobPosition entity);
-	
 }
