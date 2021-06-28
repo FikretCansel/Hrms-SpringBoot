@@ -32,8 +32,4 @@ public class User{
 	@NotNull
 	@Column(name="password")
 	private String password;
-
-	@JsonIgnore
-	@Column(name="emailConfirmation")
-	private boolean emailConfirmation;
 }

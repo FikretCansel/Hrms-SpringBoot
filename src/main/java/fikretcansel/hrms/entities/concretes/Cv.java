@@ -1,7 +1,6 @@
 package fikretcansel.hrms.entities.concretes;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,12 +33,16 @@ public class Cv {
 
 
     @OneToMany(mappedBy = "cv")
-    private List<Education> educations;
-
+    private List<CvEducation> cvEducations;
+//
     @OneToMany(mappedBy = "cv")
-    private List<Experience> experiences;
-
+    private List<CvExperience> cvExperiences;
+//
     @OneToMany(mappedBy = "cv")
     private List<CvLanguage> cvLanguages;
+//
+    @OneToMany(mappedBy = "cv")
+    private List<CvSkill> cvSkills;
+
 
 }

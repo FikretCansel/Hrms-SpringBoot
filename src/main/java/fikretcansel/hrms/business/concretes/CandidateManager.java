@@ -1,10 +1,8 @@
 package fikretcansel.hrms.business.concretes;
 
 import fikretcansel.hrms.business.abstracts.CandidateService;
-import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
+import fikretcansel.hrms.business.abstracts.EmailVerificationService;
+import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.CandidateDao;
 import fikretcansel.hrms.dataAccess.abstracts.CityDao;
 import fikretcansel.hrms.entities.concretes.Candidate;
@@ -18,9 +16,11 @@ import static fikretcansel.hrms.business.constants.MessagesTr.*;
 @Service
 public class CandidateManager implements CandidateService {
     private CandidateDao candidateDao;
+    private EmailVerificationService emailVerificationService;
 
-    public CandidateManager(CandidateDao candidateDao) {
+    public CandidateManager(CandidateDao candidateDao,EmailVerificationService emailVerificationService) {
         this.candidateDao=candidateDao;
+        this.emailVerificationService=emailVerificationService;
     }
 
 
@@ -30,6 +30,12 @@ public class CandidateManager implements CandidateService {
     }
 
     public Result apply(Candidate entity) {
+
+        var isEmailVerify=emailVerificationService.getIsVerifiedByUserId(entity.getJobAdvertisement().getId());
+
+        if(!isEmailVerify.getData()){
+            return new ErrorResult(EmailVerifyIsNecessary);
+        }
 
         candidateDao.save(entity);
         return new SuccessResult(saveSuccess);

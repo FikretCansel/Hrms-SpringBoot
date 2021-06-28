@@ -62,7 +62,7 @@ private EmailVerificationService emailVerificationService;
         
         var newUser=employerDao.save(entity);
 
-        var sendMail=emailVerificationService.sendCodeToMail(newUser.getEmail(),newUser.getId());
+        var sendMail=emailVerificationService.sendCodeToMail(newUser.getId());
 
 
 
@@ -87,9 +87,8 @@ private EmailVerificationService emailVerificationService;
 			return new ErrorDataResult(null,wrongPassword);
 		}
 
-        emailVerificationService.verify("1814",7);
 
-		LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()));
+		LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()).getData());
 
 
         return new SuccessDataResult(ResultData,loginSuccess);

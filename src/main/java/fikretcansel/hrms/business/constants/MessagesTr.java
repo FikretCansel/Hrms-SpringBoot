@@ -27,4 +27,12 @@ public class MessagesTr {
     public static String NotPermission="Bu iş Pozisyonu zaten Mevcut";
 
     public static String wrongCode="Yanlış Kod";
+
+    public static String EmailVerifyIsNecessary="Işleme Devam Edebilmek için Emailinizi Doğrulayın";
+
+    public static String timeUp="Dogrulama süresi Doldu";
+
+    public static String alreadyVerified="Dogrulama süresi Doldu";
+
+    public static String uploadSuccess="Başarı ile Yüklendi";
 }

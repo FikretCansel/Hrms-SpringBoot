@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
-//@PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
-@Table(name = "candidateLanguages")
+@Table(name = "cvLanguages")
 
 public class CvLanguage {
     @Id
@@ -28,6 +29,8 @@ public class CvLanguage {
 
     @NotNull
     @NotBlank
+    @Max(5)
+    @Min(0)
     @Column(name="level")
     private short level;
     @NotNull
@@ -35,13 +38,13 @@ public class CvLanguage {
     @Column(name="languageName")
     private String languageName;
 
-    //@OneToMany(targetEntity=Language.class, mappedBy="candidateLanguage",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-    //private List<Language> languages;
 
-
+    @JoinColumn(name = "cvId", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
     @JsonIgnore
-    @ManyToOne()
-    @JoinColumn(name = "cvId")
     private Cv cv;
+
+    @Column(name = "cvId")
+    private int cvId;
 
 }

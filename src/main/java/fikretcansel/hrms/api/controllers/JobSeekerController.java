@@ -1,5 +1,7 @@
 package fikretcansel.hrms.api.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
 import fikretcansel.hrms.entities.concretes.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -63,12 +66,14 @@ private JobSeekerService jobSeekerService;
 	{
 		return jobSeekerService.getById(id);
 	}
-
-
+	@PostMapping("uploadProfilePhoto")
+	public Result uploadProfilePhoto(MultipartFile multipartFile,int userId) throws IOException {
+		return jobSeekerService.uploadProfilePhoto(multipartFile,userId);
+	}
 
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
 
 		Map<String,String> validationErrors=new HashMap<String,String>();

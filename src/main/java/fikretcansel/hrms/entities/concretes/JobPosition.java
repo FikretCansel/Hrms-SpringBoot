@@ -30,7 +30,6 @@ public class JobPosition{
 	@Column(name="name")
 	private String name;
 	@NotNull
-	@NotBlank
 	@Column(name="createDate")
 	private Date createDate;
 

@@ -35,6 +35,13 @@ public class JobAdvertisement{
     private Date lastApplyDate;
     @Column(name="creationDate",nullable = false)
     private Date creationDate;
+
+    @Column(name="isFullTime")
+    private boolean isFullTime;
+
+    @Column(name = "hrmsVerify")
+    private boolean hrmsVerify;
+
     @NotNull
     @Column(name="isActive",nullable = false)
     private Boolean isActive;

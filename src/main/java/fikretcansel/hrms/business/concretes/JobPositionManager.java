@@ -1,7 +1,10 @@
 package fikretcansel.hrms.business.concretes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import fikretcansel.hrms.core.concrete.CloudinaryManager;
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.business.abstracts.JobPositionService;
@@ -19,7 +22,6 @@ import static fikretcansel.hrms.business.constants.MessagesTr.*;
 public class JobPositionManager implements JobPositionService {
 	
 private JobPositionDao jobPositionDao;
-	
 	public JobPositionManager(JobPositionDao jobPositionDao) {
 		this.jobPositionDao=jobPositionDao;
 	}
@@ -27,7 +29,6 @@ private JobPositionDao jobPositionDao;
 
 	@Override
 	public DataResult<List<JobPosition>> getAll() {
-
 		return new SuccessDataResult<List<JobPosition>>(jobPositionDao.findAll(),getSuccess);
 	}
 
@@ -43,6 +44,7 @@ private JobPositionDao jobPositionDao;
 		
 		return new SuccessResult(updateSuccess);
 	}
+
 
 	public Result delete(JobPosition entity) {
 		jobPositionDao.delete(entity);

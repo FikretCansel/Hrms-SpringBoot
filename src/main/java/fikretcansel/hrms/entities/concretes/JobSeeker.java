@@ -40,6 +40,9 @@ public class JobSeeker extends User{
 	@Column(name="birthDate")
 	Date birthDate;
 
+	@Column(name = "photoUrl")
+	private String photoUrl;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<Candidate> candidates;

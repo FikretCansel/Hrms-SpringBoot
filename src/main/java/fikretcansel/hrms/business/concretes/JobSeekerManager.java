@@ -1,9 +1,13 @@
 package fikretcansel.hrms.business.concretes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
 import fikretcansel.hrms.business.abstracts.EmailVerificationService;
+import fikretcansel.hrms.core.abstracts.PhotoService;
+import fikretcansel.hrms.core.concrete.CloudinaryManager;
 import fikretcansel.hrms.entities.dto.LoginResultDto;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,7 @@ import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import fikretcansel.hrms.dataAccess.abstracts.JobSeekerDao;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
+import org.springframework.web.multipart.MultipartFile;
 
 import static fikretcansel.hrms.business.constants.MessagesTr.*;
 
@@ -24,8 +29,10 @@ public class JobSeekerManager implements JobSeekerService {
 
     private JobSeekerDao jobSeekerDao;
     private EmailVerificationService emailVerificationService;
+    private PhotoService photoService;
 
-    public JobSeekerManager(JobSeekerDao jobSeekerDao,EmailVerificationService emailVerificationService) {
+    public JobSeekerManager(JobSeekerDao jobSeekerDao,EmailVerificationService emailVerificationService,PhotoService photoService) {
+        this.photoService=photoService;
         this.jobSeekerDao = jobSeekerDao;
         this.emailVerificationService=emailVerificationService;
     }
@@ -41,7 +48,17 @@ public class JobSeekerManager implements JobSeekerService {
 
         return new SuccessResult(updateSuccess);
     }
+    public Result uploadProfilePhoto(MultipartFile multipartFile,int userId) throws IOException {
+        var uploadedPhotoUrl=photoService.uploadPhoto(multipartFile);
 
+        var user=jobSeekerDao.getById(userId);
+
+        user.setPhotoUrl(uploadedPhotoUrl.getData());
+
+        jobSeekerDao.save(user);
+
+        return new SuccessResult(uploadSuccess);
+    }
 
     @Override
     public Result delete(JobSeeker entity) {
@@ -65,7 +82,7 @@ public class JobSeekerManager implements JobSeekerService {
 
         var newUser=jobSeekerDao.save(entity);
 
-        var sendMail=emailVerificationService.sendCodeToMail(newUser.getEmail(),newUser.getId());
+        var sendMail=emailVerificationService.sendCodeToMail(newUser.getId());
 
 		return new SuccessDataResult(newUser,saveSuccess);
     }
@@ -87,7 +104,7 @@ public class JobSeekerManager implements JobSeekerService {
             return new ErrorDataResult(null,wrongPassword);
         }
 
-        LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()));
+        LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()).getData());
 
 
         return new SuccessDataResult(ResultData,loginSuccess);

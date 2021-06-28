@@ -6,11 +6,11 @@ import fikretcansel.hrms.entities.concretes.EmailVerification;
 
 public interface EmailVerificationService {
 
-     Result sendCodeToMail(String email,int userId);
+     Result sendCodeToMail(int userId);
 
      Result verify(String code,int userId);
 
      EmailVerification getByUserId(int userId);
 
-    boolean getIsVerifiedByUserId(int userId);
+    DataResult<Boolean> getIsVerifiedByUserId(int userId);
 }

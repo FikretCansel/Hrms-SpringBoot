@@ -1,13 +1,10 @@
 package fikretcansel.hrms.api.controllers;
 
 import fikretcansel.hrms.business.abstracts.CandidateService;
-import fikretcansel.hrms.business.abstracts.CityService;
-import fikretcansel.hrms.core.adapters.CloudinaryAdapter;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.Candidate;
-import fikretcansel.hrms.entities.concretes.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

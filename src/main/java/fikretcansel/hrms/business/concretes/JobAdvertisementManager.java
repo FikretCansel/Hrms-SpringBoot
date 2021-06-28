@@ -1,6 +1,7 @@
 package fikretcansel.hrms.business.concretes;
 
 
+import fikretcansel.hrms.business.abstracts.EmailVerificationService;
 import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
@@ -14,16 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
 import java.util.List;
 
-import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
-import static fikretcansel.hrms.business.constants.MessagesTr.getSuccess;
+import static fikretcansel.hrms.business.constants.MessagesTr.*;
 
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
 
     private JobAdvertisementDao jobAdvertisementDao;
+    private EmailVerificationService emailVerificationService;
 
-    public JobAdvertisementManager(JobAdvertisementDao jobAdvertisementDao){
+    public JobAdvertisementManager(JobAdvertisementDao jobAdvertisementDao,EmailVerificationService emailVerificationService){
         this.jobAdvertisementDao=jobAdvertisementDao;
+        this.emailVerificationService=emailVerificationService;
     }
 
 
@@ -34,9 +36,15 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 
     public Result add(@Valid @RequestBody JobAdvertisement entity) {
 
+        var isEmailVerify=emailVerificationService.getIsVerifiedByUserId(entity.getEmployer().getId());
+
+        if(!isEmailVerify.getData()){
+            return new ErrorResult(EmailVerifyIsNecessary);
+        }
+
         jobAdvertisementDao.save(entity);
 
-        return new SuccessResult("Kayıt Başarılı");
+        return new SuccessResult(saveSuccess);
     }
 
 
