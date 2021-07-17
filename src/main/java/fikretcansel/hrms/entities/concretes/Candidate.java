@@ -29,8 +29,5 @@ public class Candidate {
     @JoinColumn(name="jobAdvertisementId")
     private JobAdvertisement jobAdvertisement;
 
-//    @ManyToOne()
-//    @JoinColumn(name = "cvId")
-//    private Cv cv;
 
 }

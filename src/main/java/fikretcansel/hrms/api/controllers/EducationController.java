@@ -5,7 +5,7 @@ import fikretcansel.hrms.business.abstracts.EducationService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.entities.concretes.Education;
+import fikretcansel.hrms.entities.concretes.CvEducation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -30,22 +30,22 @@ public class EducationController {
     }
 
     @GetMapping("/getall")
-    public DataResult<List<Education>> getAll() {
+    public DataResult<List<CvEducation>> getAll() {
         return educationService.getAll();
     }
 
     @PostMapping("add")
-    public Result add(@Valid @RequestBody Education entity){
+    public Result add(@Valid @RequestBody CvEducation entity){
         return educationService.add(entity);
     }
 
     @PostMapping("update")
-    public Result update(@Valid @RequestBody Education entity) {
+    public Result update(@Valid @RequestBody CvEducation entity) {
         return educationService.update(entity);
     }
 
     @PostMapping("delete")
-    public Result delete(@RequestBody Education entity) {
+    public Result delete(@RequestBody CvEducation entity) {
         return educationService.delete(entity);
     }
 

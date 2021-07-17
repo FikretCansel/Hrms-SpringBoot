@@ -25,9 +25,9 @@ public class CloudinaryManager implements PhotoService {
 
     public CloudinaryManager() {
         cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "your",
-                "api_key", "Your",
-                "api_secret", "Your"));
+                "cloud_name", "hrsm",
+                "api_key", "335811438377141",
+                "api_secret", "fpZHhzzxAJ3HlXgr6Wv48GQGnlA"));
     }
     @Override
     public DataResult<String> uploadPhoto(MultipartFile multipartFile) throws IOException {

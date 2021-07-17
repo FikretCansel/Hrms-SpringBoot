@@ -7,4 +7,6 @@ public interface CandidateDao extends JpaRepository<Candidate,Integer> {
 
     boolean existsAllByJobAdvertisementEmployerIdAndJobSeekerId(int jobAdvertisementEmployerId,int jobSeekerId);
 
+    Candidate getByJobSeekerId(int userId);
+
 }

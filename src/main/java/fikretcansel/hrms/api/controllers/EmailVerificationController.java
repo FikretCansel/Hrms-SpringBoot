@@ -7,6 +7,7 @@ import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.Cv;
 import fikretcansel.hrms.entities.concretes.EmailVerification;
+import fikretcansel.hrms.entities.dto.EmailApplyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -37,8 +38,8 @@ public class EmailVerificationController {
         return emailVerificationService.sendCodeToMail(userId);
     }
     @PostMapping("verify")
-    public Result verify(@Valid String code,int userId){
-        return emailVerificationService.verify(code,userId);
+    public Result verify(@RequestBody EmailApplyDto emailApplyDto){
+        return emailVerificationService.verify(emailApplyDto.getCode(),emailApplyDto.getUserId());
     }
 
     @GetMapping("getIsVerify")

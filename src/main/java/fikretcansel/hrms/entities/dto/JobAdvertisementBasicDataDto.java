@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class JobAdvertisementDto {
+public class JobAdvertisementBasicDataDto {
     private int id;
     private String companyName;
     private String positionName;

@@ -2,6 +2,8 @@ package fikretcansel.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementPostDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +15,6 @@ import java.util.List;
 
 @Entity
 @Table(name="JobAdvertisements")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 
 
@@ -39,8 +39,8 @@ public class JobAdvertisement{
     @Column(name="isFullTime")
     private boolean isFullTime;
 
-    @Column(name = "hrmsVerify")
-    private boolean hrmsVerify;
+    @Column(name = "hrmsVerify",nullable = false)
+    private boolean hrmsVerify=false;
 
     @NotNull
     @Column(name="isActive",nullable = false)
@@ -64,6 +64,28 @@ public class JobAdvertisement{
     @JsonIgnore
     @OneToMany(mappedBy = "jobAdvertisement")
     private List<Candidate> candidates;
+
+
+//    public JobAdvertisement(JobAdvertisementPostDto jobAdvertisementPostDto){
+//        this.id=jobAdvertisementPostDto.getId();
+//        this.employer=new Employer();
+//        this.employer.setId(jobAdvertisementPostDto.getEmployerId());
+//        this.city=new City();
+//        this.city.setId(jobAdvertisementPostDto.getCityId());
+//        this.jobPosition=new JobPosition();
+//        this.jobPosition.setId(jobAdvertisementPostDto.getJobPositionId());
+//        this.description=jobAdvertisementPostDto.getDescription();
+//        this.minSalary=jobAdvertisementPostDto.getMinSalary();
+//        this.maxSalary=jobAdvertisementPostDto.getMaxSalary();
+//        this.isFullTime=jobAdvertisementPostDto.isFullTime();
+//        this.openPositionCount=jobAdvertisementPostDto.getOpenPositionCount();
+//        this.lastApplyDate=jobAdvertisementPostDto.getLastApplyDate();
+//        this.creationDate=jobAdvertisementPostDto.getCreationDate();
+//        this.hrmsVerify=false;
+//        if(jobAdvertisementPostDto.getIsActive()==null){
+//            this.isActive=false;
+//        }else this.isActive=jobAdvertisementPostDto.getIsActive();
+//    }
 
 }
 

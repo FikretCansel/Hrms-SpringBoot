@@ -20,10 +20,8 @@ public class EmailVerification{
     @Column(name="id")
     private int id;
 
-
     @Column(name="code")
     private String code;
-
 
     @Column(name="isVerified")
     private boolean isVerified;

@@ -6,4 +6,6 @@ import fikretcansel.hrms.entities.concretes.Employer;
 
 public interface EmployerService extends UserBase<Employer> {
     DataResult<Employer> getById(int id);
+
+
 }

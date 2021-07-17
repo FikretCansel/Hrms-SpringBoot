@@ -31,32 +31,37 @@ public class EmailVerificationManager implements EmailVerificationService {
 
     @Override
     public Result sendCodeToMail(int userId) {
+        User user=userService.getById(userId);
+
+        if(user==null){
+            return new ErrorResult(userNotFound);
+        }
+
 
         int min = 1000;
         int max = 9999;
-
         int randomInt = (int)Math.floor(Math.random()*(max-min+1)+min);
         String code=randomInt+"";
         String message="Kodunuz : "+randomInt;
 
-        User user=userService.getById(userId);
 
-        EmailVerification emailVerification=new EmailVerification();
-        emailVerification.setCode(code);
-        emailVerification.setSaveDate(new Date());
-        emailVerification.setUserId(user.getId());
+        EmailVerification newEmailVerification=new EmailVerification();
 
+        newEmailVerification.setCode(code);
+        newEmailVerification.setSaveDate(new Date());
+        newEmailVerification.setUserId(userId);
 
+        EmailVerification fromDatabaseVerify=emailVerificationDao.getByUserId(userId);
 
+        if(fromDatabaseVerify!=null) {
+            //If exist
+            if(fromDatabaseVerify.isVerified()){
+                return new ErrorResult(alreadyVerified);
+            }
 
-        if(getByUserId(userId)==null){
-            emailVerificationDao.save(emailVerification);
-        }else{
-            emailVerification.setUserId(getByUserId(userId).getId());
-            emailVerificationDao.save(emailVerification);
-
+            newEmailVerification.setId(fromDatabaseVerify.getId());
         }
-
+        emailVerificationDao.save(newEmailVerification);
         mailService.send(message,user.getEmail());
 
         return new SuccessResult(progressSuccess);
@@ -67,12 +72,18 @@ public class EmailVerificationManager implements EmailVerificationService {
     public Result verify(String code, int userId) {
         EmailVerification emailVerification = emailVerificationDao.getByUserId(userId);
 
+        if(emailVerification==null){
+            return new ErrorResult(userNotFound);
+        }
+
         if(emailVerification.isVerified()){
             return new ErrorResult(alreadyVerified);
         }
 
+        System.out.println("veri tabanından gelen "+ emailVerification.getCode());
+        System.out.println("girilen"+code);
 
-        if(!emailVerification.getCode().equals(emailVerification.getCode())){
+        if(!emailVerification.getCode().equals(code)){
             return new ErrorResult(wrongCode);
         }
 
@@ -97,12 +108,16 @@ public class EmailVerificationManager implements EmailVerificationService {
     }
 
 
-    public EmailVerification getByUserId(int userId){
-        return emailVerificationDao.getByUserId(userId);
-    }
-
+    @Override
     public DataResult<Boolean> getIsVerifiedByUserId(int userId){
-        return new SuccessDataResult<Boolean>(emailVerificationDao.getByUserId(userId).isVerified());
+
+        EmailVerification userVerificationData =emailVerificationDao.getByUserId(userId);
+
+        if(userVerificationData==null){
+            return new ErrorDataResult<Boolean>(false);
+        }
+
+        return new SuccessDataResult<Boolean>(userVerificationData.isVerified());
     }
 
 

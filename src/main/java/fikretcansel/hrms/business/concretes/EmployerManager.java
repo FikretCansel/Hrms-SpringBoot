@@ -5,20 +5,14 @@ package fikretcansel.hrms.business.concretes;
 import java.util.List;
 
 import fikretcansel.hrms.business.abstracts.EmailVerificationService;
-import fikretcansel.hrms.entities.dto.LoginResultDto;
+import fikretcansel.hrms.core.utilities.results.concretes.*;
+import fikretcansel.hrms.entities.dto.EmployerResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.business.abstracts.EmployerService;
-import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.ErrorResult;
-import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import fikretcansel.hrms.dataAccess.abstracts.EmployerDao;
 import fikretcansel.hrms.entities.concretes.Employer;
-import fikretcansel.hrms.business.constants.MessagesTr;
 
 import static fikretcansel.hrms.business.constants.MessagesTr.*;
 
@@ -53,7 +47,7 @@ private EmailVerificationService emailVerificationService;
 
 	
 	
-	public DataResult register(Employer entity) {
+	public DataResult<Employer> register(Employer entity) {
 
 
         if(existEmail(entity.getEmail()).isSuccess()) {
@@ -66,13 +60,13 @@ private EmailVerificationService emailVerificationService;
 
 
 
-        return new SuccessDataResult(newUser,progressSuccess);
+        return new SuccessDataResult<Employer>(newUser,progressSuccess);
     }
 
     
     public DataResult login(String email,String password) {
 
-		var user=existEmail(email);
+		DataResult<Employer> user=existEmail(email);
 
 
 		Employer userData= (Employer) user.getData();
@@ -87,11 +81,9 @@ private EmailVerificationService emailVerificationService;
 			return new ErrorDataResult(null,wrongPassword);
 		}
 
-
-		LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()).getData());
-
-
-        return new SuccessDataResult(ResultData,loginSuccess);
+        return new SuccessDataResult<EmployerResultDto>(new EmployerResultDto(
+        		employer,emailVerificationService.getIsVerifiedByUserId(userData.getId())
+				.getData()),loginSuccess);
     }
     
     public DataResult existEmail(String email) {

@@ -5,8 +5,8 @@ import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
-import fikretcansel.hrms.dataAccess.abstracts.ExperienceDao;
-import fikretcansel.hrms.entities.concretes.Experience;
+import fikretcansel.hrms.dataAccess.abstracts.CvExperienceDao;
+import fikretcansel.hrms.entities.concretes.CvExperience;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,21 +15,21 @@ import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
 import static fikretcansel.hrms.business.constants.MessagesTr.saveSuccess;
 
 @Service
-public class ExperienceManager implements ExperienceService {
-    private ExperienceDao experienceDao;
+public class CvExperienceManager implements ExperienceService {
+    private CvExperienceDao experienceDao;
 
-    public ExperienceManager(ExperienceDao experienceDao) {
+    public CvExperienceManager(CvExperienceDao experienceDao) {
         this.experienceDao=experienceDao;
     }
 
 
     @Override
-    public DataResult<List<Experience>> getAll() {
-        return new SuccessDataResult<List<Experience>>(experienceDao.findAll());
+    public DataResult<List<CvExperience>> getAll() {
+        return new SuccessDataResult<List<CvExperience>>(experienceDao.findAll());
     }
 
     @Override
-    public Result add(Experience entity) {
+    public Result add(CvExperience entity) {
 
 
         experienceDao.save(entity);
@@ -37,12 +37,12 @@ public class ExperienceManager implements ExperienceService {
     }
 
     @Override
-    public Result update(Experience entity) {
+    public Result update(CvExperience entity) {
         return null;
     }
 
     @Override
-    public Result delete(Experience entity) {
+    public Result delete(CvExperience entity) {
         experienceDao.delete(entity);
         return new SuccessResult(deleteSuccess);
     }

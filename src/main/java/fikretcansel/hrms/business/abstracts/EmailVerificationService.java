@@ -10,7 +10,6 @@ public interface EmailVerificationService {
 
      Result verify(String code,int userId);
 
-     EmailVerification getByUserId(int userId);
 
     DataResult<Boolean> getIsVerifiedByUserId(int userId);
 }

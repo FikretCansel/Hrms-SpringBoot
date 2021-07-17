@@ -8,17 +8,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
-@PrimaryKeyJoinColumn(name = "cvId",referencedColumnName = "cvId")
-@Table(name = "experiences")
-public class Experience {
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
+@Table(name = "cvSkills")
+
+public class CvSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,22 +27,16 @@ public class Experience {
 
     @NotNull
     @NotBlank
-    @Column(name = "companyName")
-    private String companyName;
-    @NotNull
-    @NotBlank
-    @Column(name = "startDate")
-    private Date startDate;
-    @NotNull
-    @NotBlank
-    @Column(name = "departureDate")
-    private Date departureDate;
+    @Column(name="name")
+    private String name;
 
-    @NotNull
-    @NotBlank
+
+    @JoinColumn(name = "cvId", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Cv.class, fetch = FetchType.EAGER)
-    @JoinColumn(name="cvId")
     @JsonIgnore
     private Cv cv;
+
+    @Column(name = "cvId")
+    private int cvId;
 
 }

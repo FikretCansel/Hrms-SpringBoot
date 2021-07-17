@@ -5,8 +5,8 @@ import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
-import fikretcansel.hrms.dataAccess.abstracts.EducationDao;
-import fikretcansel.hrms.entities.concretes.Education;
+import fikretcansel.hrms.dataAccess.abstracts.CvEducationDao;
+import fikretcansel.hrms.entities.concretes.CvEducation;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,21 +15,21 @@ import static fikretcansel.hrms.business.constants.MessagesTr.deleteSuccess;
 import static fikretcansel.hrms.business.constants.MessagesTr.saveSuccess;
 
 @Service
-public class EducationManager implements EducationService {
-    private EducationDao educationDao;
+public class CvEducationManager implements EducationService {
+    private CvEducationDao educationDao;
 
-    public EducationManager(EducationDao educationDao) {
+    public CvEducationManager(CvEducationDao educationDao) {
         this.educationDao=educationDao;
     }
 
 
     @Override
-    public DataResult<List<Education>> getAll() {
-        return new SuccessDataResult<List<Education>>(educationDao.findAll());
+    public DataResult<List<CvEducation>> getAll() {
+        return new SuccessDataResult<List<CvEducation>>(educationDao.findAll());
     }
 
     @Override
-    public Result add(Education entity) {
+    public Result add(CvEducation entity) {
 
 
         educationDao.save(entity);
@@ -37,12 +37,12 @@ public class EducationManager implements EducationService {
     }
 
     @Override
-    public Result update(Education entity) {
+    public Result update(CvEducation entity) {
         return null;
     }
 
     @Override
-    public Result delete(Education entity) {
+    public Result delete(CvEducation entity) {
         educationDao.delete(entity);
         return new SuccessResult(deleteSuccess);
     }

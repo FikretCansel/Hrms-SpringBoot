@@ -27,18 +27,18 @@ public class Employer extends User{
 	@NotNull
 	@NotBlank
 	@Column(name="companyName")
-	String companyName;
+	private String companyName;
 	@NotNull
 	@NotBlank
 	@Column(name="websiteLink")
-	String websiteLink;
+	private String websiteLink;
 	@NotNull
 	@NotBlank
 	@Column(name="phone")
-	String phone;
+	private String phone;
 
-//	@Column(name="confirmationId")
-//	int confirmationId;
+	@Column(name = "isVerify")
+	private boolean hrmsVerify;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "employer")

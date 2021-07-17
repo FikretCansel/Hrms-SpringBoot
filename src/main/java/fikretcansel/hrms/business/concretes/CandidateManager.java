@@ -31,21 +31,27 @@ public class CandidateManager implements CandidateService {
 
     public Result apply(Candidate entity) {
 
-        var isEmailVerify=emailVerificationService.getIsVerifiedByUserId(entity.getJobAdvertisement().getId());
+        int userId=entity.getJobSeeker().getId();
+
+        var isEmailVerify=emailVerificationService.getIsVerifiedByUserId(userId);
 
         if(!isEmailVerify.getData()){
             return new ErrorResult(EmailVerifyIsNecessary);
         }
 
+        var isApplied=candidateDao.existsAllByJobAdvertisementEmployerIdAndJobSeekerId(entity.getJobAdvertisement().getEmployer().getId(),userId);
+        System.out.println(isApplied+"sonuç :");
+        if(isApplied){
+            return new ErrorResult(alreadyApplied);
+        }
+
         candidateDao.save(entity);
         return new SuccessResult(saveSuccess);
     }
-
     public Result update(Candidate entity) {
 
         return new SuccessResult(updateSuccess);
     }
-
     public Result delete(Candidate entity) {
         candidateDao.delete(entity);
         return new SuccessResult(deleteSuccess);

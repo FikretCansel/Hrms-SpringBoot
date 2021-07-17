@@ -6,7 +6,7 @@ import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
-import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -69,19 +69,19 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisements() {
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisements() {
 
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisements(),getSuccess);
+        return new SuccessDataResult<List<JobAdvertisementBasicDataDto>>(jobAdvertisementDao.getActiveAdvertisements(),getSuccess);
     }
 
     @Override
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList() {
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByCreationDateList(),getSuccess);
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByCreationDateList() {
+        return new SuccessDataResult<List<JobAdvertisementBasicDataDto>>(jobAdvertisementDao.getActiveAdvertisementsByCreationDateList(),getSuccess);
     }
 
     @Override
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId) {
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),getSuccess);
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByEmployerId(int employerId) {
+        return new SuccessDataResult<List<JobAdvertisementBasicDataDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),getSuccess);
     }
 
 

@@ -1,13 +1,10 @@
 package fikretcansel.hrms.api.controllers;
 
-import fikretcansel.hrms.business.abstracts.EducationService;
 import fikretcansel.hrms.business.abstracts.ExperienceService;
-import fikretcansel.hrms.business.concretes.ExperienceManager;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.entities.concretes.Education;
-import fikretcansel.hrms.entities.concretes.Experience;
+import fikretcansel.hrms.entities.concretes.CvExperience;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -32,22 +29,22 @@ public class ExperienceController {
     }
 
     @GetMapping("/getall")
-    public DataResult<List<Experience>> getAll() {
+    public DataResult<List<CvExperience>> getAll() {
         return experienceService.getAll();
     }
 
     @PostMapping("add")
-    public Result add(@Valid @RequestBody Experience entity){
+    public Result add(@Valid @RequestBody CvExperience entity){
         return experienceService.add(entity);
     }
 
     @PostMapping("update")
-    public Result update(@Valid @RequestBody Experience entity) {
+    public Result update(@Valid @RequestBody CvExperience entity) {
         return experienceService.update(entity);
     }
 
     @PostMapping("delete")
-    public Result delete(@RequestBody Experience entity) {
+    public Result delete(@RequestBody CvExperience entity) {
         return experienceService.delete(entity);
     }
 

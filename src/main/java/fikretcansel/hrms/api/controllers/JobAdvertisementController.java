@@ -4,9 +4,9 @@ import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
-import fikretcansel.hrms.entities.dto.JobAdvertisementDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementPostDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -44,6 +44,7 @@ public class JobAdvertisementController {
 
     @PostMapping("add")
     public Result add(@Valid @RequestBody JobAdvertisement entity) {
+
         return jobAdvertisementService.add(entity);
     }
 
@@ -57,15 +58,15 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/getActives")
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisements() {
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisements() {
         return jobAdvertisementService.getActiveAdvertisements();
     }
     @GetMapping("/getActivesCreationDateList")
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByCreationDateList() {
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByCreationDateList() {
         return jobAdvertisementService.getActiveAdvertisementsByCreationDateList();
     }
     @GetMapping("/getActivesByEmployerId")
-    public DataResult<List<JobAdvertisementDto>> getActiveAdvertisementsByEmployerId(int employerId) {
+    public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByEmployerId(int employerId) {
         return jobAdvertisementService.getActiveAdvertisementsByEmployerId(employerId);
     }
 

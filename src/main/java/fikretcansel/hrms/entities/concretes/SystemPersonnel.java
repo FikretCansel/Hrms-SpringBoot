@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 @PrimaryKeyJoinColumn(name = "userId")
 @Table(name ="SystemPersonels")
 @JsonIgnoreProperties({"password","email"})
-public class SystemPersonel extends User{
+public class SystemPersonnel extends User{
     @NotNull
     @NotBlank
     @Column(name = "firstName")

@@ -2,19 +2,18 @@ package fikretcansel.hrms.business.abstracts;
 
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.entities.concretes.Education;
-import fikretcansel.hrms.entities.concretes.Experience;
+import fikretcansel.hrms.entities.concretes.CvExperience;
 
 import java.util.List;
 
 public interface ExperienceService {
 
-    DataResult<List<Experience>> getAll();
+    DataResult<List<CvExperience>> getAll();
 
-    Result add(Experience entity);
+    Result add(CvExperience entity);
 
-    Result update(Experience entity);
+    Result update(CvExperience entity);
 
-    Result delete(Experience entity);
+    Result delete(CvExperience entity);
 
 }

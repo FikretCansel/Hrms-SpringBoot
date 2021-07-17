@@ -1,12 +1,10 @@
 package fikretcansel.hrms.api.controllers;
 
 import fikretcansel.hrms.business.abstracts.CvLanguageService;
-import fikretcansel.hrms.business.abstracts.EducationService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.entities.concretes.CvLanguage;
-import fikretcansel.hrms.entities.concretes.Education;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

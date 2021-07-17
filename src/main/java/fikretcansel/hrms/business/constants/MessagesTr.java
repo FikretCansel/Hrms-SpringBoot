@@ -32,7 +32,10 @@ public class MessagesTr {
 
     public static String timeUp="Dogrulama süresi Doldu";
 
-    public static String alreadyVerified="Dogrulama süresi Doldu";
+    public static String alreadyVerified="Emailiniz zaten dogrulanmıştır";
 
     public static String uploadSuccess="Başarı ile Yüklendi";
+
+    public static String alreadyApplied="Bu ilana Zaten Başvurudunuz";
+
 }

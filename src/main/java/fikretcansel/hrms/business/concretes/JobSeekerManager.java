@@ -1,23 +1,17 @@
 package fikretcansel.hrms.business.concretes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 
 import fikretcansel.hrms.business.abstracts.EmailVerificationService;
 import fikretcansel.hrms.core.abstracts.PhotoService;
-import fikretcansel.hrms.core.concrete.CloudinaryManager;
-import fikretcansel.hrms.entities.dto.LoginResultDto;
+import fikretcansel.hrms.core.utilities.results.concretes.*;
+import fikretcansel.hrms.entities.dto.EmployerResultDto;
+import fikretcansel.hrms.entities.dto.JobSeekerResultDto;
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.business.abstracts.JobSeekerService;
-import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.ErrorResult;
-import fikretcansel.hrms.core.utilities.results.concretes.Result;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
-import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import fikretcansel.hrms.dataAccess.abstracts.JobSeekerDao;
 import fikretcansel.hrms.entities.concretes.JobSeeker;
 import org.springframework.web.multipart.MultipartFile;
@@ -90,7 +84,7 @@ public class JobSeekerManager implements JobSeekerService {
 
     public DataResult login(String email, String password) {
 
-        var user=existEmail(email);
+        DataResult<JobSeeker> user=existEmail(email);
 
         JobSeeker userData= (JobSeeker) user.getData();
 
@@ -104,10 +98,9 @@ public class JobSeekerManager implements JobSeekerService {
             return new ErrorDataResult(null,wrongPassword);
         }
 
-        LoginResultDto ResultData = new LoginResultDto(user,emailVerificationService.getIsVerifiedByUserId(userData.getId()).getData());
-
-
-        return new SuccessDataResult(ResultData,loginSuccess);
+        return new SuccessDataResult<JobSeekerResultDto>(new JobSeekerResultDto(
+                userData,emailVerificationService.getIsVerifiedByUserId(userData.getId())
+                .getData()),loginSuccess);
     }
 
     public DataResult<JobSeeker> getById(int id){
