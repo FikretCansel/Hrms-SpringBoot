@@ -34,13 +34,13 @@ public class Cv {
 
     @OneToMany(mappedBy = "cv")
     private List<CvEducation> cvEducations;
-//
+
     @OneToMany(mappedBy = "cv")
     private List<CvExperience> cvExperiences;
-//
+
     @OneToMany(mappedBy = "cv")
     private List<CvLanguage> cvLanguages;
-//
+
     @OneToMany(mappedBy = "cv")
     private List<CvSkill> cvSkills;
 

@@ -46,4 +46,10 @@ public class CvSkillManager implements CvSkillService {
 
         return new SuccessResult(deleteSuccess);
     }
+
+    @Override
+    public Result deleteAllByCvId(int cvId) {
+        cvSkillDao.deleteAllByCvId(cvId);
+        return new SuccessResult(deleteSuccess);
+    }
 }

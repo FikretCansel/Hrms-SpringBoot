@@ -21,22 +21,17 @@ import java.util.Map;
 public class CandidateController {
     private CandidateService candidateService;
 
-
     @Autowired
     public CandidateController(CandidateService candidateService) {
         super();
         this.candidateService = candidateService;
-
     }
-
     @GetMapping("/getall")
     public DataResult<List<Candidate>> getAll() {
         return candidateService.getAll();
     }
     @PostMapping("apply")
     public Result apply(@RequestBody Candidate entity){
-
-
         return candidateService.apply(entity);
     }
 
@@ -52,8 +47,13 @@ public class CandidateController {
         return candidateService.delete(entity);
     }
 
+    @GetMapping("/getAllByJobAdvertisementEmployerId")
+    public DataResult<List<Candidate>> getAllByJobAdvertisementEmployerId(int jobAdvertisementId,int employerId) {
+        return candidateService.getAllByJobAdvertisementIdEmployerId(jobAdvertisementId,employerId);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions){
 
         Map<String,String> validationErrors=new HashMap<String,String>();

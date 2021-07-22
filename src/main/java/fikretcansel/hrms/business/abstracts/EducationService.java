@@ -15,4 +15,5 @@ public interface EducationService {
 
     Result delete(CvEducation entity);
 
+    Result deleteAllByCvId(int cvId);
 }

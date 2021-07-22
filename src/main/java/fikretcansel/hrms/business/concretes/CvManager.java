@@ -19,9 +19,10 @@ public class CvManager implements CvService {
     private CvLanguageService cvLanguageService;
     private CandidateService candidateService;
     private CvSkillService cvSkillService;
+    private JobSeekerService jobSeekerService;
 
 
-    public CvManager(CvDao cvDao, EducationService educationService,
+    public CvManager(CvDao cvDao,JobSeekerService jobSeekerService, EducationService educationService,
                      ExperienceService experienceService, CvLanguageService cvLanguageService, CandidateService candidateService,CvSkillService cvSkillService) {
         this.educationService=educationService;
         this.experienceService=experienceService;
@@ -29,6 +30,7 @@ public class CvManager implements CvService {
         this.cvDao=cvDao;
         this.cvSkillService=cvSkillService;
         this.candidateService=candidateService;
+        this.jobSeekerService=jobSeekerService;
     }
 
 
@@ -38,31 +40,46 @@ public class CvManager implements CvService {
     }
 
     @Override
-    public Result add(Cv entity) {
-        var cv = cvDao.save(entity);
+    public Result addAndEdit(Cv entity) {
 
-        if(cv.getCvEducations()!=null){
-            for (CvEducation education :cv.getCvEducations()){
+        Cv cv = cvDao.getAllByJobSeekerId(entity.getJobSeeker().getId());
+
+        if(cv==null){
+            cv = cvDao.save(entity);
+        }else{
+            cv.setSummary(entity.getSummary());
+            cv.setGithubAddress(entity.getGithubAddress());
+            cv.setLinkedinAddress(entity.getLinkedinAddress());
+            cvDao.save(cv);
+        }
+        if(entity.getCvEducations()!=null){
+            educationService.deleteAllByCvId(cv.getId());
+            for (CvEducation education :entity.getCvEducations()){
                 education.setCv(cv);
                 education.setCvId(cv.getId());
                 educationService.add(education);
             }
-       }
-        if(cv.getCvExperiences()!=null){
-            for (CvExperience experience :cv.getCvExperiences()){
+        }
+        if(entity.getCvExperiences()!=null){
+            experienceService.deleteAllByCvId(cv.getId());
+            for (CvExperience experience :entity.getCvExperiences()){
+
                 experience.setCv(cv);
                 experience.setCvId(cv.getId());
                 experienceService.add(experience);
             }
         }
-        if(cv.getCvLanguages()!=null){
-            for(CvLanguage cvLanguage:cv.getCvLanguages()){
+        if(entity.getCvLanguages()!=null){
+            cvLanguageService.deleteAllByCvId(cv.getId());
+            for(CvLanguage cvLanguage:entity.getCvLanguages()){
+
                 cvLanguage.setCv(cv);
                 cvLanguage.setCvId(cv.getId());
                 cvLanguageService.add(cvLanguage);
             }
         }
-        if(cv.getCvSkills()!=null){
+        if(entity.getCvSkills()!=null){
+            cvSkillService.deleteAllByCvId(cv.getId());
             for(CvSkill cvSkill:cv.getCvSkills()){
                 cvSkill.setCv(cv);
                 cvSkill.setCvId(cv.getId());
@@ -70,44 +87,6 @@ public class CvManager implements CvService {
             }
         }
 
-
-        return new SuccessResult(saveSuccess);
-    }
-
-
-    @Override
-    public Result update(Cv entity) {
-
-        var cv = cvDao.getAllByJobSeekerId(entity.getJobSeeker().getId());
-
-        if(cv.getCvEducations()!=null){
-            for (CvEducation education :cv.getCvEducations()){
-                education.setCv(cv);
-                education.setCvId(cv.getId());
-                educationService.add(education);
-            }
-        }
-        if(cv.getCvExperiences()!=null){
-            for (CvExperience experience :cv.getCvExperiences()){
-                experience.setCv(cv);
-                experience.setCvId(cv.getId());
-                experienceService.add(experience);
-            }
-        }
-        if(cv.getCvLanguages()!=null){
-            for(CvLanguage cvLanguage:cv.getCvLanguages()){
-                cvLanguage.setCv(cv);
-                cvLanguage.setCvId(cv.getId());
-                cvLanguageService.add(cvLanguage);
-            }
-        }
-        if(cv.getCvSkills()!=null){
-            for(CvSkill cvSkill:cv.getCvSkills()){
-                cvSkill.setCv(cv);
-                cvSkill.setCvId(cv.getId());
-                cvSkillService.add(cvSkill);
-            }
-        }
         return new SuccessResult(saveSuccess);
     }
 
@@ -130,11 +109,18 @@ public class CvManager implements CvService {
     @Override
     public DataResult<Cv> getByJobSeekerIdForEmployers(int jobSeekerId,int employerId) {
         if(!candidateService.getViewProfilePermission(employerId,jobSeekerId).getData()){
-            return new ErrorDataResult<>(null,NotPermission);
+            return new ErrorDataResult<>(null, notPermission);
         }
 
+        Cv cvResult=cvDao.getAllByJobSeekerId(jobSeekerId);
 
-        return new SuccessDataResult<Cv>(cvDao.getAllByJobSeekerId(jobSeekerId));
+        if(cvResult==null){
+            cvResult=new Cv();
+            JobSeeker jobSeeker=jobSeekerService.getById(jobSeekerId).getData();
+            cvResult.setJobSeeker(jobSeeker);
+        }
+
+        return new SuccessDataResult<Cv>(cvResult);
     }
 
 

@@ -46,4 +46,10 @@ public class CvExperienceManager implements ExperienceService {
         experienceDao.delete(entity);
         return new SuccessResult(deleteSuccess);
     }
+
+    @Override
+    public Result deleteAllByCvId(int cvId) {
+        experienceDao.deleteAllByCvId(cvId);
+        return new SuccessResult(deleteSuccess);
+    }
 }

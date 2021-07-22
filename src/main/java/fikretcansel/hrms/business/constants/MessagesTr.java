@@ -24,7 +24,7 @@ public class MessagesTr {
 
     public static String jobPositionAlreadyExist="Bu iş Pozisyonu zaten Mevcut";
 
-    public static String NotPermission="Bu iş Pozisyonu zaten Mevcut";
+    public static String notPermission ="izniniz yok";
 
     public static String wrongCode="Yanlış Kod";
 

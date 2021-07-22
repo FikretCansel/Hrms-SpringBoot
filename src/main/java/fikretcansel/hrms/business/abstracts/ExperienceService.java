@@ -16,4 +16,6 @@ public interface ExperienceService {
 
     Result delete(CvExperience entity);
 
+    Result deleteAllByCvId(int cvId);
+
 }

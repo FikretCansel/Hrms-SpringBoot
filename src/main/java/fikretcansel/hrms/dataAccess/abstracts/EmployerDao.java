@@ -13,4 +13,6 @@ public interface EmployerDao extends JpaRepository<Employer, Integer>{
 
 
 	List<Employer> getAllByHrmsVerifyFalse();
+	
+
 }

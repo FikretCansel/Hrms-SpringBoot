@@ -16,4 +16,6 @@ public interface CvLanguageService {
     Result update(CvLanguage language);
 
     Result delete(CvLanguage language);
+
+    Result deleteAllByCvId(int cvId);
 }

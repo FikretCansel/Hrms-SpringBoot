@@ -37,14 +37,9 @@ public class CvController {
     public DataResult<List<Cv>> getAll() {
         return cvService.getAll();
     }
-    @PostMapping("add")
-    public Result add(@Valid @RequestBody Cv entity){
-        return cvService.add(entity);
-    }
-
-    @PostMapping("update")
-    public Result update(@Valid @RequestBody Cv entity) {
-        return cvService.update(entity);
+    @PostMapping("addAndEdit")
+    public Result addAndEdit(@Valid @RequestBody Cv entity){
+        return cvService.addAndEdit(entity);
     }
 
     @PostMapping("delete")

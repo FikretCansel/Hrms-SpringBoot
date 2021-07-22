@@ -61,4 +61,19 @@ public class CandidateManager implements CandidateService {
     public DataResult<Boolean> getViewProfilePermission(int employerId,int jobSeekerId) {
         return new SuccessDataResult<Boolean>(candidateDao.existsAllByJobAdvertisementEmployerIdAndJobSeekerId(employerId,jobSeekerId));
     }
+
+    @Override
+    public DataResult<List<Candidate>> getAllByJobAdvertisementIdEmployerId(int jobAdvertisementId,int employerId) {
+        List<Candidate> candidates=candidateDao.getAllByJobAdvertisementId(jobAdvertisementId);
+
+        if(candidates.size()>=1){
+            if(candidates.get(0).getJobAdvertisement().getEmployer().getId()!=employerId){
+                return new ErrorDataResult<List<Candidate>>(null,notPermission);
+            }
+        }
+
+        return new SuccessDataResult<List<Candidate>>(candidates,progressSuccess);
+    }
+
+
 }

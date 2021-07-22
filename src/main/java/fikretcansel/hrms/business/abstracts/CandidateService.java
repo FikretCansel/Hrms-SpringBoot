@@ -18,4 +18,7 @@ public interface CandidateService {
     Result delete(Candidate entity);
 
     DataResult<Boolean> getViewProfilePermission(int employerId,int jobSeekerId) ;
+
+    DataResult<List<Candidate>> getAllByJobAdvertisementIdEmployerId(int jobAdvertisementId,int employerId);
+
 }

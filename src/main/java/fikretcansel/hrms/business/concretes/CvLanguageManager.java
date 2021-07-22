@@ -44,4 +44,10 @@ public class CvLanguageManager implements CvLanguageService {
         cvLanguageDao.delete(entity);
         return new SuccessResult(deleteSuccess);
     }
+
+    @Override
+    public Result deleteAllByCvId(int cvId) {
+        cvLanguageDao.deleteAllByCvId(cvId);
+        return new SuccessResult(deleteSuccess);
+    }
 }

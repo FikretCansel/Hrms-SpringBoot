@@ -11,9 +11,7 @@ import java.util.List;
 public interface CvService {
     DataResult<List<Cv>> getAll();
 
-    Result add(Cv entity);
-
-    Result update(Cv entity);
+    Result addAndEdit(Cv entity);
 
     Result delete(Cv entity);
 

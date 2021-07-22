@@ -47,4 +47,10 @@ public class CvEducationManager implements EducationService {
         return new SuccessResult(deleteSuccess);
     }
 
+    @Override
+    public Result deleteAllByCvId(int cvId) {
+        educationDao.deleteAllByCvId(cvId);
+        return new SuccessResult(deleteSuccess);
+    }
+
 }

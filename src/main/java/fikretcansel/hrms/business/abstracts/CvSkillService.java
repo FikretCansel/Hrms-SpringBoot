@@ -17,4 +17,5 @@ public interface CvSkillService {
 
     Result delete(CvSkill entity);
 
+    Result deleteAllByCvId(int cvId);
 }
