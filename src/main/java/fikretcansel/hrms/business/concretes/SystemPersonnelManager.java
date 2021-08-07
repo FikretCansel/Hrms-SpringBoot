@@ -3,6 +3,7 @@ package fikretcansel.hrms.business.concretes;
 import fikretcansel.hrms.business.abstracts.SystemPersonnelService;
 import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.EmployerDao;
+import fikretcansel.hrms.dataAccess.abstracts.EmployerUpdateDao;
 import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import fikretcansel.hrms.dataAccess.abstracts.SystemPersonnelDao;
 import fikretcansel.hrms.entities.concretes.*;
@@ -17,11 +18,13 @@ public class SystemPersonnelManager implements SystemPersonnelService {
     private SystemPersonnelDao systemPersonnelDao;
     private EmployerDao employerDao;
     private JobAdvertisementDao jobAdvertisementDao;
+    private EmployerUpdateDao employerUpdateDao;
 
-    public SystemPersonnelManager(SystemPersonnelDao systemPersonnelDao,EmployerDao employerDao,JobAdvertisementDao jobAdvertisementDao){
+    public SystemPersonnelManager(SystemPersonnelDao systemPersonnelDao, EmployerUpdateDao employerUpdateDao, EmployerDao employerDao, JobAdvertisementDao jobAdvertisementDao){
         this.systemPersonnelDao=systemPersonnelDao;
         this.employerDao=employerDao;
         this.jobAdvertisementDao=jobAdvertisementDao;
+        this.employerUpdateDao=employerUpdateDao;
     }
 
 
@@ -58,6 +61,35 @@ public class SystemPersonnelManager implements SystemPersonnelService {
 
         return new SuccessResult(progressSuccess);
     }
+
+    @Override
+    public Result confirmEmployerUpdate(int employerId) {
+        EmployerUpdate updateInfos= employerUpdateDao.getByEmployerId(employerId);
+
+        if(updateInfos==null){
+            return new ErrorResult(notFoundWillUpdateEmployer);
+        }
+        Employer currentData = convertConfirmEmployer(updateInfos,employerDao.findById(employerId).get());
+        employerDao.save(currentData);
+        employerUpdateDao.delete(updateInfos);
+        return new SuccessResult(progressSuccess);
+    }
+    private Employer convertConfirmEmployer(EmployerUpdate employerUpdate,Employer employer){
+        if(employerUpdate.getCompanyName()!=null){
+            employer.setCompanyName(employerUpdate.getCompanyName());
+        }
+        if(employerUpdate.getEmail()!=null){
+            employer.setEmail(employerUpdate.getEmail());
+        }
+        if(employerUpdate.getPhone()!=null){
+            employer.setPhone(employerUpdate.getPhone());
+        }
+        if(employerUpdate.getWebsiteLink()!=null){
+            employer.setWebsiteLink(employerUpdate.getWebsiteLink());
+        }
+        return employer;
+    }
+
     @Override
     public Result verifyJobAdvertisementManager(int jobAdvertisementId){
 
@@ -85,6 +117,15 @@ public class SystemPersonnelManager implements SystemPersonnelService {
         //return null;
         return new SuccessDataResult<List<Employer>>(employerDao.getAllByHrmsVerifyFalse());
     }
+
+    @Override
+    public Result update(SystemPersonnel entity) {
+
+        systemPersonnelDao.save(entity);
+
+        return new SuccessResult(updateSuccess);
+    }
+
     @Override
     public DataResult<SystemPersonnel> existEmail(String email) {
         SystemPersonnel systemPersonnel=systemPersonnelDao.getByEmail(email);

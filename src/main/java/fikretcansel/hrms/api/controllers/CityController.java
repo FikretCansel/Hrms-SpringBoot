@@ -21,14 +21,12 @@ import java.util.Map;
 @RequestMapping("/api/cities")
 public class CityController {
     private CityService cityService;
-   // private CloudinaryAdapter cloudinaryAdapter;
 
 
     @Autowired
     public CityController(CityService cityService) {
         super();
         this.cityService = cityService;
-       // cloudinaryAdapter = new CloudinaryAdapter();
     }
 
     @GetMapping("/getall")

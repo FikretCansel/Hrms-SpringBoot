@@ -38,4 +38,5 @@ public class MessagesTr {
 
     public static String alreadyApplied="Bu ilana Zaten Başvurudunuz";
 
+    public static String notFoundWillUpdateEmployer="Güncellenecek Şirket Kaydı Bulunamadı";
 }

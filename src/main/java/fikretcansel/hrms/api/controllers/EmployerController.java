@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
+import fikretcansel.hrms.entities.concretes.EmployerUpdate;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ private EmployerService employerService;
 	}
 
 	@PostMapping("update")
-	public Result update(@Valid @RequestBody Employer entity) {
+	public Result update(@Valid @RequestBody EmployerUpdate entity) {
 		return employerService.update(entity);
 	}
 

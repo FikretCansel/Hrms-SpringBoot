@@ -3,6 +3,7 @@ package fikretcansel.hrms.business.abstracts;
 
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
+import fikretcansel.hrms.entities.concretes.SystemPersonnel;
 import org.springframework.stereotype.Service;
 
 import fikretcansel.hrms.entities.concretes.JobSeeker;
@@ -17,4 +18,6 @@ public interface JobSeekerService extends UserBase<JobSeeker> {
     DataResult<JobSeeker> getById(int id);
 
     Result uploadProfilePhoto(MultipartFile multipartFile,int userId) throws IOException;
+
+    Result update(JobSeeker entity);
 }

@@ -78,7 +78,8 @@ public class JobSeekerManager implements JobSeekerService {
 
         var sendMail=emailVerificationService.sendCodeToMail(newUser.getId());
 
-		return new SuccessDataResult(newUser,saveSuccess);
+        return new SuccessDataResult<JobSeekerResultDto>(new JobSeekerResultDto(
+                entity,false),loginSuccess);
     }
 
 

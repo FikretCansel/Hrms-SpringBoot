@@ -10,6 +10,5 @@ public interface UserBase<T>{
 	DataResult register(T entity);
 	DataResult login(String email,String password);
 	DataResult<List<T>> getAll();
-	Result update(T entity);
 	Result delete(T entity);
 }

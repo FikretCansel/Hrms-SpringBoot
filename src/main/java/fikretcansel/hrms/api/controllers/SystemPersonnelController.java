@@ -34,6 +34,10 @@ public class SystemPersonnelController {
     public Result verifyEmployer(@Valid @RequestBody int employerId) {
         return systemPersonnelService.verifyEmployer(employerId);
     }
+    @PostMapping("/confirmEmployerUpdate")
+    public Result confirmEmployerUpdate(@RequestBody int employerId) {
+        return systemPersonnelService.confirmEmployerUpdate(employerId);
+    }
 
     @PostMapping("/login")
     public Result login(@Valid @RequestBody User user) {

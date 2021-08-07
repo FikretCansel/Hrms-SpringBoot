@@ -39,8 +39,7 @@ public class CandidateManager implements CandidateService {
             return new ErrorResult(EmailVerifyIsNecessary);
         }
 
-        var isApplied=candidateDao.existsAllByJobAdvertisementEmployerIdAndJobSeekerId(entity.getJobAdvertisement().getEmployer().getId(),userId);
-        System.out.println(isApplied+"sonuç :");
+        var isApplied=candidateDao.existsByJobAdvertisementIdAndJobSeekerId(entity.getJobAdvertisement().getId(),userId);
         if(isApplied){
             return new ErrorResult(alreadyApplied);
         }
