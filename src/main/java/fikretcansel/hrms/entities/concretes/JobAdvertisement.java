@@ -65,27 +65,5 @@ public class JobAdvertisement{
     @OneToMany(mappedBy = "jobAdvertisement")
     private List<Candidate> candidates;
 
-
-//    public JobAdvertisement(JobAdvertisementPostDto jobAdvertisementPostDto){
-//        this.id=jobAdvertisementPostDto.getId();
-//        this.employer=new Employer();
-//        this.employer.setId(jobAdvertisementPostDto.getEmployerId());
-//        this.city=new City();
-//        this.city.setId(jobAdvertisementPostDto.getCityId());
-//        this.jobPosition=new JobPosition();
-//        this.jobPosition.setId(jobAdvertisementPostDto.getJobPositionId());
-//        this.description=jobAdvertisementPostDto.getDescription();
-//        this.minSalary=jobAdvertisementPostDto.getMinSalary();
-//        this.maxSalary=jobAdvertisementPostDto.getMaxSalary();
-//        this.isFullTime=jobAdvertisementPostDto.isFullTime();
-//        this.openPositionCount=jobAdvertisementPostDto.getOpenPositionCount();
-//        this.lastApplyDate=jobAdvertisementPostDto.getLastApplyDate();
-//        this.creationDate=jobAdvertisementPostDto.getCreationDate();
-//        this.hrmsVerify=false;
-//        if(jobAdvertisementPostDto.getIsActive()==null){
-//            this.isActive=false;
-//        }else this.isActive=jobAdvertisementPostDto.getIsActive();
-//    }
-
 }
 

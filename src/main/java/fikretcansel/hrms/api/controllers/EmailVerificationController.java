@@ -14,9 +14,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 
@@ -34,11 +34,11 @@ public class EmailVerificationController {
     }
 
     @PostMapping("/sendCodeToMail")
-    public Result sendCodeToMail(int userId) {
+    public Result sendCodeToMail(int userId)  {
         return emailVerificationService.sendCodeToMail(userId);
     }
     @PostMapping("verify")
-    public Result verify(@RequestBody EmailApplyDto emailApplyDto){
+    public Result verify(@RequestBody EmailApplyDto emailApplyDto) {
         return emailVerificationService.verify(emailApplyDto.getCode(),emailApplyDto.getUserId());
     }
 

@@ -3,6 +3,7 @@ package fikretcansel.hrms.dataAccess.abstracts;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
 import fikretcansel.hrms.entities.dto.JobAdvertisementFilter;
+import fikretcansel.hrms.entities.dto.JobAdvertisementHomeDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,11 +38,16 @@ public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement,Inte
             "From JobAdvertisement ja where ja.isActive=true and ja.employer.id=:employerId")
     List<JobAdvertisementBasicDataDto> getActiveAdvertisementsByEmployerId(int employerId);
 
-//    @Query("Select j  from JobAdvertisement j where ((:#{#filter.cityId}) IS NULL OR j.city.id IN (:#{#filter.cityId}))"
-//            + "and ((:#{#filter.jobTitleId}) IS NULL OR j.jobPosition.id IN (:#{#filter.jobTitleId}))"
-//            +" and ((:#{#filter.workTimeId}) IS NULL OR j..id IN (:#{#filter.workTimeId}))"
-//            +" and ((:#{#filter.workTypeId}) IS NULL OR j.isFullTime IN (:#{#filter.workTypeId}))"
-//            + "and j.isActive = true Order By j.createDate Desc ")
-//    public Page<JobAdvertisement> getByFilter(@Param("filter") JobAdvertisementFilter jobAdvertFilter, Pageable pageable);
+//    @Query("Select JobAdvertisement from JobAdvertisement j where ((:#{#filter.cityId}) IS NULL OR j.city.id IN (:#{#filter.cityId}))"
+//            + "and ((:#{#filter.jobPositionId}) IS NULL OR j.jobPosition.id IN (:#{#filter.jobPositionId}))"
+//            + "and j.isActive = true Order By j.creationDate Desc ")
+//    Page<JobAdvertisement> getByFilterr(@Param("filter") JobAdvertisementFilter jobAdvertFilter, Pageable pageable);
+
+    @Query("Select new fikretcansel.hrms.entities.dto.JobAdvertisementHomeDto"
+            + "(ja.id, ja.employer.companyName,ja.jobPosition.name," +
+            "ja.openPositionCount,ja.creationDate,ja.lastApplyDate,ja.city.cityName,ja.isFullTime)" +
+            "From JobAdvertisement ja where ((:#{#filter.jobPositionId}) " +
+            "is null OR ja.jobPosition.id IN (:#{#filter.jobPositionId})) and ja.isActive=true Order By ja.creationDate Desc ")
+    List<JobAdvertisementHomeDto> getByFilterMain(@Param("filter") JobAdvertisementFilter jobAdvertFilter, Pageable pageable);
 
 }

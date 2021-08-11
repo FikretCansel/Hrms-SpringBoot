@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
+import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
+import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,7 +46,7 @@ private JobSeekerService jobSeekerService;
 		return jobSeekerService.getAll();
 	}
 	@PostMapping(  "register")
-	public Result register(@Valid @RequestBody JobSeeker entity) throws Exception {
+	public Result register(@Valid @RequestBody JobSeeker entity){
 		return jobSeekerService.register(entity);
 	}
 	@PostMapping("login")
@@ -66,8 +71,9 @@ private JobSeekerService jobSeekerService;
 	{
 		return jobSeekerService.getById(id);
 	}
-	@PostMapping("uploadProfilePhoto")
-	public Result uploadProfilePhoto(MultipartFile multipartFile,int userId) throws IOException {
+	@PostMapping(value = "/uploadFile", consumes = {"multipart/form-data"})
+	public Result uploadProfilePhoto(@RequestParam(name = "file") MultipartFile multipartFile,int userId) throws IOException {
+		System.out.println(multipartFile);
 		return jobSeekerService.uploadProfilePhoto(multipartFile,userId);
 	}
 
@@ -85,6 +91,7 @@ private JobSeekerService jobSeekerService;
 
 		return error;
 	}
+
 
 }
 

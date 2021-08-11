@@ -4,9 +4,14 @@ import fikretcansel.hrms.business.abstracts.JobAdvertisementService;
 import fikretcansel.hrms.core.utilities.results.concretes.DataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.ErrorDataResult;
 import fikretcansel.hrms.core.utilities.results.concretes.Result;
+import fikretcansel.hrms.core.utilities.results.concretes.SuccessDataResult;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementFilter;
+import fikretcansel.hrms.entities.dto.JobAdvertisementHomeDto;
 import fikretcansel.hrms.entities.dto.JobAdvertisementPostDto;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -68,6 +73,10 @@ public class JobAdvertisementController {
     @GetMapping("/getActivesByEmployerId")
     public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByEmployerId(int employerId) {
         return jobAdvertisementService.getActiveAdvertisementsByEmployerId(employerId);
+    }
+    @GetMapping("/getAllFilterAndPage")
+    public DataResult<List<JobAdvertisementHomeDto>> getAllFilterAndPage(int pageNo, int pageSize, JobAdvertisementFilter advertFilter){
+        return jobAdvertisementService.getAllFilterAndPage(pageNo,pageSize,advertFilter);
     }
 
 

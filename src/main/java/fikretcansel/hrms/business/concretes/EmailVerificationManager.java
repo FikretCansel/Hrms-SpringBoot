@@ -30,7 +30,7 @@ public class EmailVerificationManager implements EmailVerificationService {
 
 
     @Override
-    public Result sendCodeToMail(int userId) {
+    public Result sendCodeToMail(int userId)  {
         User user=userService.getById(userId);
 
         if(user==null){

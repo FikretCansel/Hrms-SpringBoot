@@ -103,6 +103,7 @@ public class CvManager implements CvService {
 
     @Override
     public DataResult<Cv> getByJobSeekerIdForItSelf(int userId) {
+
         return new SuccessDataResult<Cv>(cvDao.getAllByJobSeekerId(userId));
     }
 

@@ -119,7 +119,6 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
 	public Result existNationalId(String nationalId) {
-
 		boolean jobSeekerExist=jobSeekerDao.existsByNationalIdentityNumber(nationalId);
 		if(jobSeekerExist){
 			return new SuccessResult();

@@ -5,11 +5,13 @@ import fikretcansel.hrms.core.utilities.results.concretes.Result;
 import fikretcansel.hrms.core.utilities.results.concretes.SuccessResult;
 import org.springframework.stereotype.Service;
 
-@Service
-public class MailManager implements MailService {
+
+public class GmailManager implements MailService {
     @Override
-    public Result send(String message,String toEmailAddress) {
-        System.out.println(message);
+    public Result send(String message, String ToEmailAddress) {
+
+
+        System.out.println(message+"Gmail ile gönderildi");
 
         return new SuccessResult(message);
     }

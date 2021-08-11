@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 public class JobAdvertisementFilter {
 
     private List<Integer> cityId;
-    private List<Integer> jobTitleId;
-    private List<Integer> workTimeId;
-    private List<Integer> workTypeId;
+    private List<Integer> jobPositionId;
 }

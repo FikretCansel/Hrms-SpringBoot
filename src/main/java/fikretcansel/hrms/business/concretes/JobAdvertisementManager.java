@@ -7,6 +7,11 @@ import fikretcansel.hrms.core.utilities.results.concretes.*;
 import fikretcansel.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import fikretcansel.hrms.entities.concretes.JobAdvertisement;
 import fikretcansel.hrms.entities.dto.JobAdvertisementBasicDataDto;
+import fikretcansel.hrms.entities.dto.JobAdvertisementFilter;
+import fikretcansel.hrms.entities.dto.JobAdvertisementHomeDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -83,6 +88,14 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     public DataResult<List<JobAdvertisementBasicDataDto>> getActiveAdvertisementsByEmployerId(int employerId) {
         return new SuccessDataResult<List<JobAdvertisementBasicDataDto>>(jobAdvertisementDao.getActiveAdvertisementsByEmployerId(employerId),getSuccess);
     }
+    @Override
+    public DataResult<List<JobAdvertisementHomeDto>> getAllFilterAndPage(int pageNo, int pageSize, JobAdvertisementFilter advertFilter) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+        return new  SuccessDataResult<List<JobAdvertisementHomeDto>>(this.jobAdvertisementDao.
+                getByFilterMain(advertFilter, pageable), getSuccess+"Sayfa:"+pageNo);
+    }
+
+
 
 
 }
